@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="29b3b2e6-2b01-4f5c-ba72-2e560a72ee63" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../potcommun-frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../potcommun-frontend/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../potcommun-frontend/src/pages/Auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/../potcommun-frontend/src/pages/Auth.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../potcommun-frontend/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../potcommun-frontend/src/pages/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../potcommun-frontend/src/pages/Register.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../potcommun-frontend/src/pages/Register.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="38KeA4mIJggrBx7vUBjHI7G9Qn0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AssociationServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CagnotteEvenementServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DonFactureServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Spring Boot.PotCommunApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Yann&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/Legion/Desktop/Code/MESI/PotCommun-backend/src/test/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Legion/Desktop/Code/MESI/PotCommun-backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/Legion/Desktop/Code/MESI/PotCommun/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.potcommun.domain.service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.PotCommunApplication">
+    <configuration name="AssociationServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PotCommun-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.potcommun.domain.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.potcommun.domain.service" />
+      <option name="MAIN_CLASS_NAME" value="org.potcommun.domain.service.AssociationServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CagnotteEvenementServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PotCommun-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.potcommun.domain.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.potcommun.domain.service" />
+      <option name="MAIN_CLASS_NAME" value="org.potcommun.domain.service.CagnotteEvenementServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DonFactureServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PotCommun-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.potcommun.domain.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.potcommun.domain.service" />
+      <option name="MAIN_CLASS_NAME" value="org.potcommun.domain.service.DonFactureServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="PotCommun-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.potcommun.domain.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.potcommun.domain.service" />
+      <option name="MAIN_CLASS_NAME" value="org.potcommun.domain.service.UserServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PotCommunApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="PotCommun-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.potcommun.PotCommunApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.potcommun.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.PotCommunApplication" />
+        <item itemvalue="JUnit.AssociationServiceTest" />
+        <item itemvalue="JUnit.CagnotteEvenementServiceTest" />
+        <item itemvalue="JUnit.DonFactureServiceTest" />
+        <item itemvalue="JUnit.UserServiceTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="29b3b2e6-2b01-4f5c-ba72-2e560a72ee63" name="Changes" comment="" />
+      <created>1768552545570</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1768552545570</updated>
+      <workItem from="1768552549726" duration="6015000" />
+      <workItem from="1770027053103" duration="1304000" />
+      <workItem from="1770106529866" duration="26000" />
+      <workItem from="1772702317739" duration="3636000" />
+      <workItem from="1772714827656" duration="4621000" />
+      <workItem from="1773498159760" duration="8441000" />
+      <workItem from="1773943795548" duration="1358000" />
+      <workItem from="1774598633381" duration="4312000" />
+      <workItem from="1775142771428" duration="2259000" />
+      <workItem from="1775147444934" duration="1196000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
