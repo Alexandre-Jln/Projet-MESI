@@ -30,13 +30,14 @@ jobs:
           cache: maven
 
       - name: Build et tests Maven
+        working-directory: backend
         run: mvn clean package --no-transfer-progress
 
       - name: Upload de l'artefact JAR
         uses: actions/upload-artifact@v4
         with:
           name: backend-jar
-          path: target/*.jar
+          path: backend/target/*.jar
           retention-days: 7
 
   frontend:
