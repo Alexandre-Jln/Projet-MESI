@@ -24,10 +24,10 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  /* ⚠️ Pas de display:flex ni place-items:center ici —
+     ça cassait le layout pleine largeur des pages. */
 }
 
 h1 {
