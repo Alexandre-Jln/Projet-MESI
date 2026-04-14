@@ -1,7 +1,12 @@
+### Dossier de build maven
 target/
-!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### Pour Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+### Cache Kotlin
 .kotlin
 
 ### IntelliJ IDEA ###
@@ -34,6 +39,47 @@ build/
 
 ### VS Code ###
 .vscode/
+!.vscode/extensions.json
 
 ### Mac OS ###
 .DS_Store
+
+# Editor directories and files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+### Frontend
+/**/node_modules
+/**/.pnp
+/**/.pnp.js
+dist
+dist-ssr
+*.local
+
+# production
+/**/build
+
+# Environnement
+.env
+.env.*
+/**/.env.local
+/**/.env.development.local
+/**/.env.test.local
+/**/.env.production.local
+/**/.env.production
+
+# Logs
+logs
+*.log
+/**/npm-debug.log*
+/**/yarn-debug.log*
+/**/yarn-error.log*
+/**/pnpm-debug.log*
+/**/lerna-debug.log*
+
+### Misc RN
+*.jks
+*.keystore
