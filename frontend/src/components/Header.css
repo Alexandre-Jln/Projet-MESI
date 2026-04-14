@@ -1,0 +1,97 @@
+/* ── Barre principale ────────────────────────────────── */
+.header {
+    height: 60px;
+    width: 100%;
+    background-color: #2563eb;       /* bleu principal */
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    gap: 2rem;
+}
+
+/* ── Logo ────────────────────────────────────────────── */
+.header__logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-decoration: none;
+    margin-right: 1rem;
+}
+
+/* ── Navigation centrale ─────────────────────────────── */
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+/* Bouton de nav — invisible par défaut */
+.header__nav-link {
+    padding: 0.35rem 0.9rem;
+    border-radius: 6px;
+    border: 1.5px solid transparent;
+    background-color: transparent;
+    color: #000000;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color 0.15s, background-color 0.15s;
+    white-space: nowrap;
+}
+
+.header__nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #000000;
+}
+
+/* Bouton de nav — page active : fond + contour blancs */
+.header__nav-link--active {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+}
+
+.header__nav-link--active:hover {
+    background-color: #ffffff;
+}
+
+/* ── Boutons d'auth (droite) ─────────────────────────── */
+.header__auth {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: auto;
+}
+
+.header__auth-btn {
+    padding: 0.35rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.header__auth-btn:hover {
+    opacity: 0.85;
+}
+
+/* Connexion : texte blanc, fond noir — toujours */
+.header__auth-btn--login {
+    background-color: #000000;
+    color: #ffffff;
+    border: 1.5px solid #000000;
+}
+
+/* S'inscrire : texte noir, fond blanc — toujours */
+.header__auth-btn--register {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1.5px solid #ffffff;
+}

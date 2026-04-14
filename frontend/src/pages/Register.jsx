@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Header from "../components/Header";
+import "./Auth.css";
 
 export default function Register() {
     const [email, setEmail] = useState("");
@@ -21,11 +23,46 @@ export default function Register() {
     };
 
     return (
-        <form onSubmit={submit}>
-            <h2>Register</h2>
-            <input placeholder="Email" onChange={e => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-            <button type="submit">Créer un compte</button>
-        </form>
+        <>
+            <Header />
+
+            <main className="auth-page">
+                <div className="auth-card">
+                    <h2 className="auth-card__title">Créer un compte</h2>
+
+                    <form className="auth-form" onSubmit={submit}>
+                        <div className="auth-field">
+                            <label className="auth-field__label" htmlFor="email">
+                                Adresse mail
+                            </label>
+                            <input
+                                id="email"
+                                className="auth-field__input"
+                                type="email"
+                                placeholder="exemple@mail.com"
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="auth-field">
+                            <label className="auth-field__label" htmlFor="password">
+                                Mot de passe
+                            </label>
+                            <input
+                                id="password"
+                                className="auth-field__input"
+                                type="password"
+                                placeholder="••••••••"
+                                onChange={e => setPassword(e.target.value)}
+                            />
+                        </div>
+
+                        <button className="auth-btn" type="submit">
+                            S'enregistrer
+                        </button>
+                    </form>
+                </div>
+            </main>
+        </>
     );
 }
