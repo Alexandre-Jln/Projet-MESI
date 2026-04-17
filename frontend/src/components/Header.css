@@ -1,97 +1,121 @@
-/* ── Barre principale ────────────────────────────────── */
+/* ── Barre principale ─────────────────────────────────────── */
 .header {
-    height: 60px;
+    height: 64px;
     width: 100%;
-    background-color: #2563eb;       /* bleu principal */
+    background-color: #ffffff;
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     box-sizing: border-box;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    gap: 2rem;
+    box-shadow: 0 1px 0 #e5e7eb;   /* ligne subtile en bas */
+    gap: 2.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-/* ── Logo ────────────────────────────────────────────── */
+/* ── Logo ─────────────────────────────────────────────────── */
 .header__logo {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
     text-decoration: none;
-    margin-right: 1rem;
+    flex-shrink: 0;
 }
 
-/* ── Navigation centrale ─────────────────────────────── */
+.header__logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.header__logo-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+/* ── Navigation centrale ──────────────────────────────────── */
 .header__nav {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.1rem;
     flex: 1;
 }
 
-/* Bouton de nav — invisible par défaut */
+/* Lien de nav — fond blanc, texte gris foncé */
 .header__nav-link {
-    padding: 0.35rem 0.9rem;
+    padding: 0.4rem 0.85rem;
     border-radius: 6px;
-    border: 1.5px solid transparent;
     background-color: transparent;
-    color: #000000;
+    color: #374151;           /* gris foncé — bon contraste sur blanc */
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;
-    transition: border-color 0.15s, background-color 0.15s;
+    transition: background-color 0.15s, color 0.15s;
     white-space: nowrap;
 }
 
 .header__nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: #000000;
+    background-color: #f3f4f6;
+    color: #111827;
 }
 
-/* Bouton de nav — page active : fond + contour blancs */
+/* Lien actif — bleu discret */
 .header__nav-link--active {
-    background-color: #ffffff;
-    border-color: #ffffff;
-    color: #000000;
+    color: #2563eb;
+    background-color: #eff6ff;
+    font-weight: 600;
 }
 
 .header__nav-link--active:hover {
-    background-color: #ffffff;
+    background-color: #dbeafe;
 }
 
-/* ── Boutons d'auth (droite) ─────────────────────────── */
+/* ── Boutons auth (droite) ────────────────────────────────── */
 .header__auth {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    gap: 0.75rem;
     margin-left: auto;
+    flex-shrink: 0;
 }
 
 .header__auth-btn {
-    padding: 0.35rem 1rem;
-    border-radius: 6px;
+    padding: 0.45rem 1.1rem;
+    border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
-    transition: opacity 0.15s;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    display: inline-flex;
+    align-items: center;
 }
 
-.header__auth-btn:hover {
-    opacity: 0.85;
-}
-
-/* Connexion : texte blanc, fond noir — toujours */
+/* Connexion : ghost, texte sombre */
 .header__auth-btn--login {
-    background-color: #000000;
-    color: #ffffff;
-    border: 1.5px solid #000000;
+    background-color: transparent;
+    color: #374151;
+    border: 1.5px solid #d1d5db;
 }
 
-/* S'inscrire : texte noir, fond blanc — toujours */
+.header__auth-btn--login:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+/* Register : plein bleu, texte blanc */
 .header__auth-btn--register {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1.5px solid #ffffff;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: 1.5px solid #2563eb;
+}
+
+.header__auth-btn--register:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
 }

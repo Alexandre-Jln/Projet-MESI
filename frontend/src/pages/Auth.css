@@ -1,6 +1,6 @@
 /* ── Page wrapper ────────────────────────────────────── */
 .auth-page {
-    height: calc(100vh - 60px);
+    min-height: calc(100vh - 64px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,7 +10,7 @@
 /* ── White card ──────────────────────────────────────── */
 .auth-card {
     width: 70%;
-    height: 100%;
+    min-height: 60vh;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -25,7 +25,22 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: #1e1e2e;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+/* ── Message d'erreur ────────────────────────────────── */
+.auth-error {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-align: left;
 }
 
 /* ── Form ────────────────────────────────────────────── */
@@ -38,7 +53,7 @@
     gap: 1.25rem;
 }
 
-/* ── Field (label + input) ───────────────────────────── */
+/* ── Field ───────────────────────────────────────────── */
 .auth-field {
     width: 100%;
     display: flex;
@@ -72,7 +87,7 @@
     background-color: #ffffff;
 }
 
-/* ── Button ──────────────────────────────────────────── */
+/* ── Bouton de soumission ────────────────────────────── */
 .auth-btn {
     width: 100%;
     padding: 0.75rem;
@@ -87,16 +102,20 @@
     transition: background-color 0.2s, transform 0.1s;
 }
 
-.auth-btn:hover {
+.auth-btn:hover:not(:disabled) {
     background-color: #1d4ed8;
-    border-color: transparent;
 }
 
-.auth-btn:active {
+.auth-btn:active:not(:disabled) {
     transform: scale(0.98);
 }
 
-/* ── Forgot password ─────────────────────────────────── */
+.auth-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ── Mot de passe oublié ─────────────────────────────── */
 .auth-forgot {
     margin-top: 0.25rem;
     font-size: 0.875rem;

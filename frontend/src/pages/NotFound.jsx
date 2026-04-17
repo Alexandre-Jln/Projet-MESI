@@ -5,7 +5,6 @@ import "./NotFound.css";
 export default function NotFound() {
     return (
         <>
-            <Header />
             <main className="not-found">
                 <h1 className="not-found__code">404</h1>
                 <p className="not-found__message">Cette page n'existe pas encore.</p>
