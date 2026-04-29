@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import "./Header.css";
+import "../css/Header.css";
 
 // 📌 Mettre le logo dans : frontend/src/assets/logo.png
 // (renommer ton image en "logo.png")
