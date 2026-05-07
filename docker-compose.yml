@@ -2,7 +2,7 @@ version: "3.9"
 
 # =============================================================
 #  PotCommun – Docker Compose
-#  Services : MySQL 8 + phpMyAdmin
+#  Services : MySQL 8 + phpMyAdmin + Backend Spring Boot
 # =============================================================
 
 services:
@@ -33,6 +33,22 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    networks:
+      - potcommun_net
+
+  backend:
+    build: ./backend
+    container_name: potcommun_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy   # attend que MySQL soit prêt avant de démarrer
+    environment:
+      DB_HOST:     db                              # nom du service ci-dessus
+      DB_USER:     ${MYSQL_USER:-potcommun_user}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-potcommun_pass}
+    ports:
+      - "8080:8080"
     networks:
       - potcommun_net
 

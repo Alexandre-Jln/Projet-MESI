@@ -1,0 +1,24 @@
+# =============================================================
+#  PotCommun – Dockerfile backend Spring Boot
+#  Placer ce fichier dans : backend/Dockerfile
+# =============================================================
+
+# --- Étape 1 : Build avec Maven ---
+FROM maven:3.9-eclipse-temurin-21-alpine AS build
+WORKDIR /app
+
+# On copie d'abord le pom.xml seul pour profiter du cache des dépendances :
+# si pom.xml ne change pas, Docker réutilise le layer sans re-télécharger
+COPY pom.xml .
+RUN mvn dependency:go-offline -q
+
+# Puis on copie les sources et on build
+COPY src ./src
+RUN mvn package -DskipTests -q
+
+# --- Étape 2 : Image runtime allégée ---
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
