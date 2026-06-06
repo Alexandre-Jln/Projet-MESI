@@ -1,0 +1,130 @@
+/* ── Page wrapper ────────────────────────────────────── */
+.auth-page {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
+}
+
+/* ── White card ──────────────────────────────────────── */
+.auth-card {
+    width: 70%;
+    min-height: 60vh;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    padding: 3rem 2rem;
+}
+
+.auth-card__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e1e2e;
+    margin-bottom: 2rem;
+}
+
+/* ── Message d'erreur ────────────────────────────────── */
+.auth-error {
+    width: 100%;
+    max-width: 420px;
+    padding: 0.65rem 1rem;
+    border-radius: 8px;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+/* ── Form ────────────────────────────────────────────── */
+.auth-form {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+/* ── Field ───────────────────────────────────────────── */
+.auth-field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.auth-field__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #444;
+    text-align: left;
+}
+
+.auth-field__input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    border: 1.5px solid #d0d5dd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1e1e2e;
+    background-color: #fafafa;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.auth-field__input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    background-color: #ffffff;
+}
+
+/* ── Bouton de soumission ────────────────────────────── */
+.auth-btn {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.auth-btn:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.auth-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.auth-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* ── Mot de passe oublié ─────────────────────────────── */
+.auth-forgot {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #2563eb;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.auth-forgot:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}

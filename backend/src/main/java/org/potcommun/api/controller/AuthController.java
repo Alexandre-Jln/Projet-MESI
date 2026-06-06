@@ -1,32 +1,40 @@
 package org.potcommun.api.controller;
 
+import jakarta.validation.Valid;
 import org.potcommun.api.dto.LoginRequest;
 import org.potcommun.api.dto.RegisterRequest;
 import org.potcommun.api.dto.UserResponse;
 import org.potcommun.domain.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.potcommun.infrastructure.mapper.UserMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     private final UserService service;
+    private final UserMapper  mapper;
 
-    public AuthController(UserService service) {
+    public AuthController(UserService service, UserMapper mapper) {
         this.service = service;
+        this.mapper  = mapper;
     }
+
 
     @PostMapping("/register")
-    public UserResponse register(@RequestBody RegisterRequest request) {
-        return service.register(request);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponse register(@Valid @RequestBody RegisterRequest request) {
+        return mapper.toResponse(
+                service.register(request.email(), request.password())
+        );
     }
+
 
     @PostMapping("/login")
-    public UserResponse login(@RequestBody LoginRequest request) {
-        return service.login(request);
+    public UserResponse login(@Valid @RequestBody LoginRequest request) {
+        return mapper.toResponse(
+                service.login(request.email(), request.password())
+        );
     }
 }
-
