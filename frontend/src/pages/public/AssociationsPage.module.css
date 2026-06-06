@@ -54,7 +54,7 @@
 
     .content {
         padding: 28px 24px;
-        max-width: 780px;
+        max-width: 960px;
     }
 
     .title {
@@ -65,6 +65,19 @@
     .grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 18px;
+    }
+}
+
+/* ===== Intermédiaire : ≥ 768px — 3 colonnes ===== */
+@media (min-width: 768px) {
+    .content {
+        padding: 28px 32px;
+        max-width: 960px;
+    }
+
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 }
 

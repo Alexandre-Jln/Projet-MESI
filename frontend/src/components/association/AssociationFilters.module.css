@@ -92,7 +92,7 @@
 /* ===== Tablette : ≥ 640px ===== */
 @media (min-width: 640px) {
     .searchWrapper {
-        max-width: 480px;
+        max-width: 600px;
     }
 
     .filterRow {
