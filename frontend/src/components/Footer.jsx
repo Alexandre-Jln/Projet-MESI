@@ -1,3 +1,5 @@
+import logo from "../assets/logopotcommun.png";
+
 const FOOTER_COLUMNS = [
     {
         title: "Besoin d'aide ?",
@@ -20,11 +22,7 @@ export default function Footer() {
                 {/* Brand */}
                 <div>
                     <div style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 800, fontSize: 18, marginBottom: 20 }}>
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: "linear-gradient(135deg, #1A5FA8, #0F9B72)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M12 21C12 21 3 13.5 3 8a9 9 0 0 1 18 0c0 5.5-9 13-9 13z"/>
-                            </svg>
-                        </div>
+                        <img src={logo} alt="Logo PotCommun" style={{ width: 36, height: 36, objectFit: "contain" }} />
                         PotCommun
                     </div>
                     <div style={{ display: "flex", gap: 8 }}>
