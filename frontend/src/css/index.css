@@ -1,4 +1,4 @@
-/* ── Reset & base ──────────────────────────────────────────── */
+/* ── Reset & base ── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -6,13 +6,13 @@
 }
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
 
-  color: #111827;
-  background-color: #f9fafb;
+  color: #1a1a2e;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,9 +20,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+html, body, #root {
+  width: 100%;
   min-height: 100vh;
-  min-width: 320px;
 }
 
 a {
