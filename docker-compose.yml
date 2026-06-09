@@ -1,0 +1,63 @@
+version: "3.9"
+
+# =============================================================
+#  PotCommun – Docker Compose
+#  Services : MySQL 8 + phpMyAdmin
+# =============================================================
+
+services:
+
+  db:
+    image: mysql:8.0
+    container_name: potcommun_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE:      ${MYSQL_DATABASE:-potcommun}
+      MYSQL_USER:          ${MYSQL_USER:-potcommun_user}
+      MYSQL_PASSWORD:      ${MYSQL_PASSWORD:-potcommun_pass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost",
+             "-u", "${MYSQL_USER:-potcommun_user}",
+             "-p${MYSQL_PASSWORD:-potcommun_pass}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - potcommun_net
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: potcommun_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST:     db
+      PMA_PORT:     3306
+      PMA_USER:     ${MYSQL_USER:-potcommun_user}
+      PMA_PASSWORD: ${MYSQL_PASSWORD:-potcommun_pass}
+    ports:
+      - "8081:80"
+    networks:
+      - potcommun_net
+
+volumes:
+  mysql_data:
+    name: potcommun_mysql_data
+
+networks:
+  potcommun_net:
+    name: potcommun_network
+    driver: bridge

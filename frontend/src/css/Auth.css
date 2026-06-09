@@ -1,6 +1,8 @@
 /* ── Page wrapper ────────────────────────────────────── */
 .auth-page {
+
     min-height: calc(100vh - 64px);
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,7 +12,9 @@
 /* ── White card ──────────────────────────────────────── */
 .auth-card {
     width: 70%;
-    min-height: 60vh;
+
+    height: 100%;
+
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -25,6 +29,7 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: #1e1e2e;
+
     margin-bottom: 2rem;
 }
 
@@ -53,7 +58,9 @@
     gap: 1.25rem;
 }
 
-/* ── Field ───────────────────────────────────────────── */
+
+/* ── Field (label + input) ───────────────────────────── */
+
 .auth-field {
     width: 100%;
     display: flex;
@@ -87,7 +94,9 @@
     background-color: #ffffff;
 }
 
+
 /* ── Bouton de soumission ────────────────────────────── */
+
 .auth-btn {
     width: 100%;
     padding: 0.75rem;
@@ -101,6 +110,7 @@
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
 }
+
 
 .auth-btn:hover:not(:disabled) {
     background-color: #1d4ed8;
@@ -116,6 +126,7 @@
 }
 
 /* ── Mot de passe oublié ─────────────────────────────── */
+
 .auth-forgot {
     margin-top: 0.25rem;
     font-size: 0.875rem;
@@ -127,4 +138,6 @@
 .auth-forgot:hover {
     color: #1d4ed8;
     text-decoration: underline;
+
 }
+
