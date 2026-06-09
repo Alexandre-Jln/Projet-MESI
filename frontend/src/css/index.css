@@ -1,5 +1,4 @@
-
-/* ── Reset & base ──────────────────────────────────────────── */
+/* ── Reset & base ── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -7,20 +6,17 @@
 }
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
-
-  color: #111827;
-  background-color: #f9fafb;
-
+  color: #1a1a2e;
+  background-color: #ffffff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 
 a {
   font-weight: 500;
@@ -31,13 +27,12 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
+html, body, #root {
+  width: 100%;
   min-height: 100vh;
-  /* ⚠️ Pas de display:flex ni place-items:center ici —
-     ça cassait le layout pleine largeur des pages. */
 }
+/* ⚠️ Pas de display:flex ni place-items:center ici —
+   ça cassait le layout pleine largeur des pages. */
 
 h1 {
   font-size: 3.2em;
