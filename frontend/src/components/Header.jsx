@@ -3,12 +3,13 @@ import logo from "../assets/logopotcommun.png";
 import "../css/Header.css";
 
 const NAV_LINKS = [
-    { label: "Boutique",   path: "/boutique" },
-    { label: "Solutions",  path: "/solutions" },
-    { label: "Évènements", path: "/evenements" },
-    { label: "Projets",    path: "/projets" },
-    { label: "Contact",    path: "/contact" },
-    { label: "Bénévolat",  path: "/benevolat" },
+    { label: "Associations", path: "/associations" },
+    { label: "Boutique",     path: "/boutique" },
+    { label: "Solutions",    path: "/solutions" },
+    { label: "Évènements",   path: "/evenements" },
+    { label: "Projets",      path: "/projets" },
+    { label: "Contact",      path: "/contact" },
+    { label: "Bénévolat",    path: "/benevolat" },
 ];
 
 export default function Header() {

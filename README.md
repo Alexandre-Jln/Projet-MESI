@@ -1,5 +1,5 @@
 # Projet-MESI
 
-Frontend : React
+- Frontend : React
 
-Backend : Java
+- Backend : Java
