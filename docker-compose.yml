@@ -17,7 +17,7 @@ services:
       MYSQL_USER:          ${MYSQL_USER:-potcommun_user}
       MYSQL_PASSWORD:      ${MYSQL_PASSWORD:-potcommun_pass}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -45,8 +45,11 @@ services:
         condition: service_healthy   # attend que MySQL soit prêt avant de démarrer
     environment:
       DB_HOST:     db                              # nom du service ci-dessus
+      DB_PORT:     3306
       DB_USER:     ${MYSQL_USER:-potcommun_user}
       DB_PASSWORD: ${MYSQL_PASSWORD:-potcommun_pass}
+      APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
     ports:
       - "8080:8080"
     networks:

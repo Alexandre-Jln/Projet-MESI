@@ -1,24 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import NotFound from "./pages/NotFound";
+import Home           from "./pages/Home";
+import Login          from "./pages/Login";
+import Register       from "./pages/Register";
+import NotFound       from "./pages/NotFound";
+import Cagnottes      from "./pages/Cagnottes";
+import CreateCagnotte from "./pages/CreateCagnotte";
+import CagnotteDetail from "./pages/CagnotteDetail";
 
 export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/"          element={<Home />} />
-                <Route path="/login"     element={<Login />} />
-                <Route path="/register"  element={<Register />} />
+                <Route path="/"                    element={<Home />} />
+                <Route path="/login"               element={<Login />} />
+                <Route path="/register"            element={<Register />} />
 
-                {/* Pages à venir — toutes redirigées vers 404 pour l'instant */}
-                <Route path="/associations" element={<NotFound />} />
-                <Route path="/cagnottes"    element={<NotFound />} />
-                <Route path="/evenements"   element={<NotFound />} />
+                {/* Cagnottes */}
+                <Route path="/cagnottes"           element={<Cagnottes />} />
+                <Route path="/cagnottes/creer"     element={<CreateCagnotte />} />
+                <Route path="/cagnottes/:id"       element={<CagnotteDetail />} />
 
-                {/* Catch-all */}
-                <Route path="*" element={<NotFound />} />
+                <Route path="/associations"        element={<NotFound />} />
+                <Route path="/evenements"          element={<NotFound />} />
+
+                <Route path="*"                    element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     );
