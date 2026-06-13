@@ -4,6 +4,7 @@ import { useAssociations, fetchFilterOptions } from "../../hooks/useAssociations
 import AssociationCard from "../../components/association/AssociationCard";
 import AssociationFilters from "../../components/association/AssociationFilters";
 import Pagination from "../../components/ui/Pagination";
+import Layout from "../../components/Layout";
 import styles from "./AssociationsPage.module.css";
 
 export default function AssociationsPage() {
@@ -57,6 +58,7 @@ export default function AssociationsPage() {
     }, [setSearchParams]);
 
     return (
+        <Layout>
         <div className={styles.page}>
             <div className={styles.filtersBar}>
                 <AssociationFilters
@@ -99,5 +101,6 @@ export default function AssociationsPage() {
                 )}
             </div>
         </div>
+        </Layout>
     );
 }
