@@ -2,7 +2,7 @@
 .header {
     height: 60px;
     width: 100%;
-    background-color: #2563eb;       /* bleu principal */
+    background-color: #2563eb;
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
@@ -30,13 +30,12 @@
     flex: 1;
 }
 
-/* Bouton de nav — invisible par défaut */
 .header__nav-link {
     padding: 0.35rem 0.9rem;
     border-radius: 6px;
     border: 1.5px solid transparent;
     background-color: transparent;
-    color: #000000;
+    color: #ffffff;
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;
@@ -46,18 +45,30 @@
 
 .header__nav-link:hover {
     background-color: rgba(255, 255, 255, 0.15);
-    color: #000000;
+    color: #ffffff;
 }
 
-/* Bouton de nav — page active : fond + contour blancs */
 .header__nav-link--active {
     background-color: #ffffff;
     border-color: #ffffff;
-    color: #000000;
+    color: #2563eb;
 }
 
 .header__nav-link--active:hover {
     background-color: #ffffff;
+}
+
+/* Lien "Espace association" — légèrement distinct */
+.header__nav-link--asso {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #ffffff;
+    margin-left: 0.5rem;
+}
+
+.header__nav-link--asso:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+    color: #ffffff;
 }
 
 /* ── Boutons d'auth (droite) ─────────────────────────── */
@@ -78,18 +89,14 @@
     transition: opacity 0.15s;
 }
 
-.header__auth-btn:hover {
-    opacity: 0.85;
-}
+.header__auth-btn:hover { opacity: 0.85; }
 
-/* Connexion : texte blanc, fond noir — toujours */
 .header__auth-btn--login {
     background-color: #000000;
     color: #ffffff;
     border: 1.5px solid #000000;
 }
 
-/* S'inscrire : texte noir, fond blanc — toujours */
 .header__auth-btn--register {
     background-color: #ffffff;
     color: #000000;

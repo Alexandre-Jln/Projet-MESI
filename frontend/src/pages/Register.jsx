@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
@@ -78,6 +79,14 @@ export default function Register() {
                         {loading ? "Création…" : "S'enregistrer"}
                     </button>
                 </form>
+
+                {/* Séparateur + lien espace association */}
+                <div className="auth-switch">
+                    <span>Vous représentez une association ?</span>
+                    <Link to="/associations/register" className="auth-switch__link">
+                        Inscrire mon association →
+                    </Link>
+                </div>
             </div>
         </main>
     );

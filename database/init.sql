@@ -272,3 +272,35 @@ INSERT INTO don (user_id, association_id, montant, date) VALUES
                                                              (10, 5,  35.00, '2025-06-01 09:30:00'),
                                                              (1,  6,  10.00, '2025-10-15 17:00:00'),
                                                              (3,  2,  45.00, '2025-09-22 18:00:00');
+
+ALTER TABLE association
+    ADD COLUMN IF NOT EXISTS email_hash    VARCHAR(64),
+    ADD COLUMN IF NOT EXISTS password_hash VARCHAR(250),
+    ADD COLUMN IF NOT EXISTS description   TEXT,
+    ADD COLUMN IF NOT EXISTS iban          VARCHAR(34),
+    ADD COLUMN IF NOT EXISTS statut        ENUM('PENDING','VALIDATED','REJECTED')
+    NOT NULL DEFAULT 'VALIDATED',
+    ADD COLUMN IF NOT EXISTS date_inscription DATETIME,
+    ADD COLUMN IF NOT EXISTS date_validation  DATETIME,
+    ADD COLUMN IF NOT EXISTS motif_rejet   TEXT;
+
+
+UPDATE association SET statut = 'VALIDATED' WHERE statut IS NULL OR statut = 'VALIDATED';
+
+INSERT IGNORE INTO association
+    (name, categorie, email, email_hash, password_hash, siret,
+     siege_social, telephone, description, statut, date_inscription, date_validation)
+VALUES (
+    'Association Démo PotCommun',
+    'Culture',
+    'demo.asso@example.com',
+    '3e8a2f1b9c4d7e6f0a5b8c3d2e1f4a7b9c6d3e8f1a4b7c0d5e2f9a6b3c8d1e4',
+    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+    '12345678901234',
+    '1 rue de la Démo, 75001 Paris',
+    '0100000000',
+    'Compte de démonstration pour tester la création de cagnottes.',
+    'VALIDATED',
+    NOW(),
+    NOW()
+);

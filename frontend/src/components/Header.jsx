@@ -3,7 +3,6 @@ import "../css/Header.css";
 
 const NAV_LINKS = [
     { label: "Accueil",      path: "/" },
-    { label: "Associations", path: "/associations" },
     { label: "Cagnottes",   path: "/cagnottes" },
     { label: "Évènements",  path: "/evenements" },
 ];
@@ -26,6 +25,11 @@ export default function Header() {
                         {label}
                     </NavLink>
                 ))}
+
+                {/* Lien espace association mis en avant dans la nav */}
+                <Link to="/associations/login" className="header__nav-link header__nav-link--asso">
+                    Espace association
+                </Link>
             </nav>
 
             <div className="header__auth">
