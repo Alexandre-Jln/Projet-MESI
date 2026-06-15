@@ -31,6 +31,8 @@ CREATE TABLE IF NOT EXISTS association (
     siret        VARCHAR(250) UNIQUE,
     siege_social VARCHAR(250),
     telephone    VARCHAR(20),
+    latitude     DECIMAL(9,6) NULL,
+    longitude    DECIMAL(9,6) NULL,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -44,6 +46,8 @@ CREATE TABLE IF NOT EXISTS evenement (
     release_dt     DATE,
     synopsis       TEXT,
     association_id INT          NOT NULL,
+    latitude       DECIMAL(9,6) NULL,
+    longitude      DECIMAL(9,6) NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_evenement_association
         FOREIGN KEY (association_id) REFERENCES association (id)
@@ -166,15 +170,15 @@ INSERT INTO users (email, password) VALUES
     ('alice@example.com',   '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
     ('bob@example.com',     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
 
-INSERT INTO association (name, categorie, email, siret, siege_social, telephone) VALUES
-    ('Les Restos du Cœur', 'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale Paris', '0140123456'),
-    ('Greenpeace France',  'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien Paris',   '0140212321');
+INSERT INTO association (name, categorie, email, siret, siege_social, telephone, latitude, longitude) VALUES
+    ('Les Restos du Cœur', 'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale Paris', '0140123456', 48.856600, 2.352200),
+    ('Greenpeace France',  'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien Paris',   '0140212321', 48.873800, 2.350600);
 
 INSERT INTO campagne (association_id) VALUES (1), (2);
 
-INSERT INTO evenement (name, length, release_dt, synopsis, association_id) VALUES
-    ('Gala de charité 2025', 180, '2025-06-15', 'Soirée annuelle de levée de fonds.', 1),
-    ('Marche pour le climat', 120, '2025-09-22', 'Manifestation pacifique pour le climat.', 2);
+INSERT INTO evenement (name, length, release_dt, synopsis, association_id, latitude, longitude) VALUES
+    ('Gala de charité 2025',  180, '2025-06-15', 'Soirée annuelle de levée de fonds.',      1, 48.856600, 2.352200),
+    ('Marche pour le climat', 120, '2025-09-22', 'Manifestation pacifique pour le climat.', 2, 48.858400, 2.294500);
 
 INSERT INTO adhesion (user_id, association_id, role) VALUES
     (1, 1, 'admin'),

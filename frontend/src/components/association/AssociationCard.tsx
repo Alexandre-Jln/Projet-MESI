@@ -14,15 +14,16 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
 
 interface Props {
     association: AssociationSummary;
+    onClick?: () => void;
 }
 
-export default function AssociationCard({ association }: Props) {
+export default function AssociationCard({ association, onClick }: Props) {
     const { name, shortDescription, category, city } = association;
     const gradient = CATEGORY_GRADIENTS[category] ?? "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)";
     const initials = name.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
 
     return (
-        <div className={styles.card}>
+        <div className={styles.card} onClick={onClick} style={onClick ? { cursor: "pointer" } : undefined}>
             <div className={styles.banner} style={{ background: gradient }}>
                 <span className={styles.initials}>{initials}</span>
                 <span className={styles.categoryBadge}>{category}</span>
