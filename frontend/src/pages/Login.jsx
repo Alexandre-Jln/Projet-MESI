@@ -1,24 +1,33 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
 
 export default function Login() {
-    const [email,    setEmail]    = useState("");
-    const [password, setPassword] = useState("");
-    const [error,    setError]    = useState(null);
-    const [loading,  setLoading]  = useState(false);
+    const [email,         setEmail]         = useState("");
+    const [password,      setPassword]      = useState("");
+    const [error,         setError]         = useState(null);
+    const [loading,       setLoading]       = useState(false);
+    const [captchaToken,  setCaptchaToken]  = useState(null);
+    const captchaRef = useRef(null);
 
     const submit = async (e) => {
         e.preventDefault();
         setError(null);
+
+        if (!captchaToken) {
+            setError("Veuillez compléter le captcha.");
+            return;
+        }
+
         setLoading(true);
 
         try {
             const res = await fetch(`${API_URL}/auth/login`, {
                 method:  "POST",
                 headers: { "Content-Type": "application/json" },
-                body:    JSON.stringify({ email, password }),
+                body:    JSON.stringify({ email, password, captchaToken }),
             });
 
             if (res.ok) {
@@ -26,9 +35,13 @@ export default function Login() {
             } else {
                 const data = await res.json().catch(() => ({}));
                 setError(data.message ?? "Identifiants invalides.");
+                captchaRef.current?.resetCaptcha();
+                setCaptchaToken(null);
             }
         } catch {
             setError("Impossible de joindre le serveur. Vérifiez votre connexion.");
+            captchaRef.current?.resetCaptcha();
+            setCaptchaToken(null);
         } finally {
             setLoading(false);
         }
@@ -39,7 +52,6 @@ export default function Login() {
             <div className="auth-card">
                 <h2 className="auth-card__title">Connexion</h2>
 
-                {/* Message d'erreur — remplace les alert() */}
                 {error && <p className="auth-error" role="alert">{error}</p>}
 
                 <form className="auth-form" onSubmit={submit} noValidate>
@@ -75,7 +87,18 @@ export default function Login() {
                         />
                     </div>
 
-                    <button className="auth-btn" type="submit" disabled={loading}>
+                    <HCaptcha
+                        sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                        onVerify={(token) => setCaptchaToken(token)}
+                        onExpire={() => setCaptchaToken(null)}
+                        ref={captchaRef}
+                    />
+
+                    <button
+                        className="auth-btn"
+                        type="submit"
+                        disabled={loading || !captchaToken}
+                    >
                         {loading ? "Connexion…" : "Se connecter"}
                     </button>
 
