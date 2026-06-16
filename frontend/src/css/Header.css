@@ -1,3 +1,6 @@
+/* Header.css — version fusionnée
+   Base : design develop (blanc, sticky, logo image)
+   Ajout : style .header__nav-link--asso (ta branche) */
 
 /* ── Barre principale ─────────────────────────────────────── */
 .header {
@@ -8,7 +11,7 @@
     align-items: center;
     padding: 0 2rem;
     box-sizing: border-box;
-    box-shadow: 0 1px 0 #e5e7eb;   /* ligne subtile en bas */
+    box-shadow: 0 1px 0 #e5e7eb;
     gap: 2.5rem;
     position: sticky;
     top: 0;
@@ -46,17 +49,15 @@
     flex: 1;
 }
 
-/* Lien de nav — fond blanc, texte gris foncé */
 .header__nav-link {
     padding: 0.4rem 0.85rem;
     border-radius: 6px;
     background-color: transparent;
-    color: #374151;           /* gris foncé — bon contraste sur blanc */
+    color: #374151;
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;
     transition: background-color 0.15s, color 0.15s;
-
     white-space: nowrap;
 }
 
@@ -65,7 +66,6 @@
     color: #111827;
 }
 
-/* Lien actif — bleu discret */
 .header__nav-link--active {
     color: #2563eb;
     background-color: #eff6ff;
@@ -74,6 +74,18 @@
 
 .header__nav-link--active:hover {
     background-color: #dbeafe;
+}
+
+/* Bouton "Espace association" — ta branche, bordure bleue pour le distinguer */
+.header__nav-link--asso {
+    border: 1.5px solid #2563eb;
+    color: #2563eb;
+    margin-left: 0.5rem;
+}
+
+.header__nav-link--asso:hover {
+    background-color: #eff6ff;
+    color: #1d4ed8;
 }
 
 /* ── Boutons auth (droite) ────────────────────────────────── */
@@ -92,13 +104,11 @@
     font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
-
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
     display: inline-flex;
     align-items: center;
 }
 
-/* Connexion : ghost, texte sombre */
 .header__auth-btn--login {
     background-color: transparent;
     color: #374151;
@@ -111,7 +121,6 @@
     color: #111827;
 }
 
-/* Register : plein bleu, texte blanc */
 .header__auth-btn--register {
     background-color: #2563eb;
     color: #ffffff;

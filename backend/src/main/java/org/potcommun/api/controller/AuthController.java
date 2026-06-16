@@ -9,6 +9,10 @@ import org.potcommun.infrastructure.mapper.UserMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Architecture develop : AuthController délègue la conversion DTO ↔ Entity à UserMapper.
+ * UserService ne manipule plus que des primitives.
+ */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -21,7 +25,6 @@ public class AuthController {
         this.mapper  = mapper;
     }
 
-
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
@@ -29,7 +32,6 @@ public class AuthController {
                 service.register(request.email(), request.password())
         );
     }
-
 
     @PostMapping("/login")
     public UserResponse login(@Valid @RequestBody LoginRequest request) {
