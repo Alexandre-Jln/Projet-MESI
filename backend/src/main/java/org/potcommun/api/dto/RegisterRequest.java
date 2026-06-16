@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record RegisterRequest(
 
-        @NotBlank(message = "L'email est obligatoire")
+        @NotBlank(message = "L'adresse email est obligatoire")
         @Email(message = "Format d'email invalide")
         @Size(max = 250, message = "L'email ne peut pas dépasser 250 caractères")
         String email,

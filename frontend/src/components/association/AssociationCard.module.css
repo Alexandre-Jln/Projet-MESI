@@ -1,0 +1,126 @@
+/* ===== Card ===== */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-2px);
+}
+
+/* ===== Bannière image ===== */
+.banner {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.initials {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.05em;
+    user-select: none;
+}
+
+.categoryBadge {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+}
+
+/* ===== Contenu ===== */
+.body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.name {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.city {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #888;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.description {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* ===== Tablette : ≥ 640px ===== */
+@media (min-width: 640px) {
+    .banner {
+        height: 150px;
+    }
+
+    .body {
+        padding: 16px;
+    }
+
+    .name {
+        font-size: 0.93rem;
+    }
+
+    .description {
+        font-size: 0.82rem;
+    }
+}
+
+/* ===== Desktop : ≥ 1024px ===== */
+@media (min-width: 1024px) {
+    .banner {
+        height: 160px;
+    }
+
+    .initials {
+        font-size: 2.5rem;
+    }
+
+    .name {
+        font-size: 0.95rem;
+    }
+
+    .city {
+        font-size: 0.78rem;
+    }
+}

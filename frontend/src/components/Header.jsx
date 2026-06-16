@@ -1,43 +1,54 @@
 import { NavLink, Link } from "react-router-dom";
+import logo from "../assets/logopotcommun.png";
 import "../css/Header.css";
 
+// Navigation develop — tous leurs liens conservés
 const NAV_LINKS = [
-    { label: "Accueil",      path: "/" },
-    { label: "Cagnottes",   path: "/cagnottes" },
-    { label: "Évènements",  path: "/evenements" },
+    { label: "Associations", path: "/associations" },
+    { label: "Boutique",     path: "/boutique" },
+    { label: "Solutions",    path: "/solutions" },
+    { label: "Évènements",   path: "/evenements" },
+    { label: "Projets",      path: "/projets" },
+    { label: "Contact",      path: "/contact" },
+    { label: "Bénévolat",    path: "/benevolat" },
 ];
 
 export default function Header() {
     return (
         <header className="header">
-            <span className="header__logo">PotCommun</span>
+            {/* Logo develop — image + texte */}
+            <Link to="/" className="header__logo">
+                <img src={logo} alt="Logo PotCommun" className="header__logo-img" />
+                <span className="header__logo-name">PotCommun</span>
+            </Link>
 
-            <nav className="header__nav">
+            <nav className="header__nav" aria-label="Navigation principale">
                 {NAV_LINKS.map(({ label, path }) => (
                     <NavLink
                         key={path}
                         to={path}
-                        end={path === "/"}
                         className={({ isActive }) =>
-                            isActive ? "header__nav-link header__nav-link--active" : "header__nav-link"
+                            isActive
+                                ? "header__nav-link header__nav-link--active"
+                                : "header__nav-link"
                         }
                     >
                         {label}
                     </NavLink>
                 ))}
 
-                {/* Lien espace association mis en avant dans la nav */}
+                {/* Bouton espace association — ta branche */}
                 <Link to="/associations/login" className="header__nav-link header__nav-link--asso">
                     Espace association
                 </Link>
             </nav>
 
             <div className="header__auth">
-                <Link to="/login"    className="header__auth-btn header__auth-btn--login">
+                <Link to="/login" className="header__auth-btn header__auth-btn--login">
                     Connexion
                 </Link>
                 <Link to="/register" className="header__auth-btn header__auth-btn--register">
-                    S'inscrire
+                    S&apos;inscrire
                 </Link>
             </div>
         </header>
