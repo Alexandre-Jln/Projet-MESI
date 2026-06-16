@@ -1,0 +1,74 @@
+/* ===== Wrapper ===== */
+.pagination {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+/* ===== Boutons ===== */
+.btn {
+    background: #fff;
+    color: #444;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    min-width: 34px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+    background: #f0f0f0;
+}
+
+.btnActive {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+}
+
+.btnActive:hover {
+    background: #1a1a1a;
+}
+
+.btn:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.ellipsis {
+    color: #bbb;
+    padding: 0 4px;
+    font-size: 0.85rem;
+}
+
+/* ===== Tablette : ≥ 640px ===== */
+@media (min-width: 640px) {
+    .pagination {
+        gap: 6px;
+        margin-top: 36px;
+    }
+
+    .btn {
+        padding: 7px 12px;
+        font-size: 0.85rem;
+        min-width: 36px;
+    }
+}
+
+/* ===== Desktop : ≥ 1024px ===== */
+@media (min-width: 1024px) {
+    .pagination {
+        gap: 6px;
+        margin-top: 40px;
+    }
+
+    .btn {
+        padding: 7px 13px;
+        min-width: 38px;
+    }
+}

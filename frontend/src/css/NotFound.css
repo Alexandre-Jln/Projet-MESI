@@ -1,0 +1,40 @@
+.not-found {
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
+    gap: 1rem;
+}
+
+.not-found__code {
+    font-size: 6rem;
+    font-weight: 800;
+    color: #2563eb;
+    margin: 0;
+    line-height: 1;
+}
+
+.not-found__message {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0;
+}
+
+.not-found__back {
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color 0.2s;
+}
+
+.not-found__back:hover {
+    background-color: #1d4ed8;
+    color: #ffffff;
+}
