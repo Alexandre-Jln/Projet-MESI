@@ -1,0 +1,57 @@
+.item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    border: 1.5px solid #f0f0f0;
+    cursor: pointer;
+    transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    transform: translateY(-1px);
+}
+
+.itemSelected {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.desc {
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0 0 10px;
+    line-height: 1.5;
+}
+
+.city {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    margin: 0;
+}

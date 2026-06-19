@@ -61,7 +61,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <!-- Plugin Maven — ajout de develop -->
     <build>
         <plugins>
             <plugin>

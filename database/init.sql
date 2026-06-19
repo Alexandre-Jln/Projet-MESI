@@ -1,5 +1,6 @@
 -- =============================================================
 --  PotCommun – Script d'initialisation MySQL
+--  Exécuté automatiquement au premier démarrage du conteneur Docker
 -- =============================================================
 
 CREATE DATABASE IF NOT EXISTS potcommun
@@ -32,6 +33,8 @@ CREATE TABLE IF NOT EXISTS association (
     siret        VARCHAR(250) UNIQUE,
     siege_social VARCHAR(250),
     telephone    VARCHAR(20),
+    latitude     DECIMAL(9,6) NULL,
+    longitude    DECIMAL(9,6) NULL,
     PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -45,6 +48,8 @@ CREATE TABLE IF NOT EXISTS evenement (
     release_dt     DATE,
     synopsis       TEXT,
     association_id INT          NOT NULL,
+    latitude       DECIMAL(9,6) NULL,
+    longitude      DECIMAL(9,6) NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_evenement_association
     FOREIGN KEY (association_id) REFERENCES association (id)
@@ -81,6 +86,7 @@ CREATE TABLE IF NOT EXISTS commande (
     ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Clé étrangère paiement → commande (ajoutée après création de commande)
 ALTER TABLE paiement
     ADD CONSTRAINT fk_paiement_commande
         FOREIGN KEY (commande_id) REFERENCES commande (id)
@@ -200,16 +206,19 @@ INSERT INTO users (email, email_hash, password) VALUES
                                                      '6b8a022a8ff9ed95013c02e59820dd7a71a777131b48af4887e7a28835fa7629',
                                                      '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
 
-INSERT INTO association (name, categorie, email, siret, siege_social, telephone) VALUES
-                                                                                     ('Les Restos du Cœur',      'Aide alimentaire',  'contact@restosducoeur.fr',  '30251719200030', '75 rue Nationale, 75010 Paris',        '0140123456'),
-                                                                                     ('Greenpeace France',       'Environnement',     'info@greenpeace.fr',         '39399240200020', '13 rue Enghien, 75010 Paris',          '0140212321'),
-                                                                                     ('Croix-Rouge Française',   'Aide humanitaire',  'contact@croix-rouge.fr',     '77567227200329', '98 rue Didot, 75014 Paris',            '0144431100'),
-                                                                                     ('Médecins Sans Frontières','Santé',              'info@msf.fr',                '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris','0140213229'),
-                                                                                     ('WWF France',              'Environnement',     'contact@wwf.fr',             '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484'),
-                                                                                     ('Ligue contre le Cancer',  'Santé',             'info@ligue-cancer.net',      '77563134200021', '14 rue Corvisart, 75013 Paris',        '0153559595');
+INSERT INTO association (name, categorie, email, siret, siege_social, telephone, latitude, longitude) VALUES
+    ('Les Restos du Cœur',      'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale Paris',                '0140123456', 48.856600, 2.352200),
+    ('Greenpeace France',        'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien Paris',                  '0140212321', 48.873800, 2.350600),
+    ('Croix-Rouge Française',    'Aide humanitaire', 'contact@croix-rouge.fr',   '77567227200329', '98 rue Didot, 75014 Paris',             '0144431100', 48.828200, 2.317300),
+    ('Médecins Sans Frontières', 'Santé',            'info@msf.fr',              '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris', '0140213229', 48.879300, 2.371900),
+    ('WWF France',               'Environnement',    'contact@wwf.fr',           '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484', 48.861500, 2.252200),
+    ('Ligue contre le Cancer',   'Santé',            'info@ligue-cancer.net',    '77563134200021', '14 rue Corvisart, 75013 Paris',         '0153559595', 48.827800, 2.351100);
 
 INSERT INTO campagne (association_id) VALUES (1),(2),(3),(4),(5),(6);
 
+INSERT INTO evenement (name, length, release_dt, synopsis, association_id, latitude, longitude) VALUES
+    ('Gala de charité 2025',  180, '2025-06-15', 'Soirée annuelle de levée de fonds.',      1, 48.856600, 2.352200),
+    ('Marche pour le climat', 120, '2025-09-22', 'Manifestation pacifique pour le climat.', 2, 48.858400, 2.294500);
 INSERT INTO evenement (name, length, release_dt, synopsis, association_id) VALUES
                                                                                ('Gala de charité 2025',               180, '2025-06-15', 'Soirée annuelle de levée de fonds avec vente aux enchères et dîner.',                  1),
                                                                                ('Collecte hivernale – Paris Nord',     90, '2025-11-28', 'Grande collecte de denrées alimentaires dans les supermarchés partenaires.',           1),

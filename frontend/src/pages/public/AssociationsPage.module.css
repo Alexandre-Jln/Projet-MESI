@@ -98,3 +98,151 @@
         gap: 20px;
     }
 }
+
+/* ================================================================
+   VUE SPLIT (association sélectionnée)
+   ================================================================ */
+
+/* Wrapper colonne qui occupe tout l'espace sous le header */
+.splitWrapper {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 64px);
+    /* Pas d'overflow:hidden ici : ça clipperait les <select> natifs dans Firefox */
+}
+
+/* La filtersBar dans le splitWrapper ne doit pas rétrécir */
+.splitWrapper .filtersBar {
+    flex-shrink: 0;
+    /* z-index élevé pour que les <select> s'affichent au-dessus des couches Leaflet (max 1000) */
+    position: relative;
+    z-index: 1100;
+}
+
+.splitContainer {
+    display: flex;
+    flex: 1;
+    min-height: 0; /* permet au flex-child de rétrécir en dessous de sa hauteur naturelle */
+    overflow: hidden;
+}
+
+/* ── Panneau gauche ── */
+.splitLeft {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #f7f7f8;
+    border-right: 1px solid #e5e7eb;
+}
+
+.tabs {
+    display: flex;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+
+.tab {
+    padding: 14px 18px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6b7280;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.tab:hover { color: #1a1a2e; }
+
+.tabActive {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+    font-weight: 600;
+}
+
+.splitListWrapper {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 14px 24px;
+}
+
+.resultCount {
+    display: block;
+    font-size: 0.82rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+    padding: 0 2px;
+}
+
+.splitList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tabPlaceholder {
+    padding: 32px 0;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+/* ── Panneau droit — carte ── */
+.splitRight {
+    flex: 1;
+    position: relative;
+}
+
+.splitRight > div,
+.splitRight > div > div {
+    height: 100%;
+    width: 100%;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    color: #374151;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+}
+
+.closeBtn:hover { background: #f3f4f6; }
+
+/* ── Responsive split — mobile ── */
+@media (max-width: 767px) {
+    /* Sur mobile : le panneau gauche disparaît, seule la carte reste */
+    .splitLeft { display: none; }
+
+    .splitRight {
+        width: 100%;
+        flex: 1;
+    }
+
+    /* Le bouton X est plus visible sur mobile */
+    .closeBtn {
+        top: 16px;
+        left: 16px;
+        right: auto;
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+}
