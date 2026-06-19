@@ -207,8 +207,12 @@ INSERT INTO users (email, email_hash, password) VALUES
                                                      '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
 
 INSERT INTO association (name, categorie, email, siret, siege_social, telephone, latitude, longitude) VALUES
-    ('Les Restos du Cœur', 'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale Paris', '0140123456', 48.856600, 2.352200),
-    ('Greenpeace France',  'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien Paris',   '0140212321', 48.873800, 2.350600);
+    ('Les Restos du Cœur',      'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale Paris',                '0140123456', 48.856600, 2.352200),
+    ('Greenpeace France',        'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien Paris',                  '0140212321', 48.873800, 2.350600),
+    ('Croix-Rouge Française',    'Aide humanitaire', 'contact@croix-rouge.fr',   '77567227200329', '98 rue Didot, 75014 Paris',             '0144431100', 48.828200, 2.317300),
+    ('Médecins Sans Frontières', 'Santé',            'info@msf.fr',              '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris', '0140213229', 48.879300, 2.371900),
+    ('WWF France',               'Environnement',    'contact@wwf.fr',           '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484', 48.861500, 2.252200),
+    ('Ligue contre le Cancer',   'Santé',            'info@ligue-cancer.net',    '77563134200021', '14 rue Corvisart, 75013 Paris',         '0153559595', 48.827800, 2.351100);
 
 INSERT INTO campagne (association_id) VALUES (1),(2),(3),(4),(5),(6);
 
