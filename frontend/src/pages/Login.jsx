@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
@@ -39,7 +40,6 @@ export default function Login() {
             <div className="auth-card">
                 <h2 className="auth-card__title">Connexion</h2>
 
-                {/* Message d'erreur — remplace les alert() */}
                 {error && <p className="auth-error" role="alert">{error}</p>}
 
                 <form className="auth-form" onSubmit={submit} noValidate>
@@ -83,6 +83,14 @@ export default function Login() {
                         Mot de passe oublié ?
                     </a>
                 </form>
+
+                {/* Séparateur + lien espace association */}
+                <div className="auth-switch">
+                    <span>Vous représentez une association ?</span>
+                    <Link to="/associations/login" className="auth-switch__link">
+                        Connexion espace association →
+                    </Link>
+                </div>
             </div>
         </main>
     );

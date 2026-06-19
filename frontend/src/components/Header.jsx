@@ -2,6 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/logopotcommun.png";
 import "../css/Header.css";
 
+// Navigation develop — tous leurs liens conservés
 const NAV_LINKS = [
     { label: "Associations", path: "/associations" },
     { label: "Boutique",     path: "/boutique" },
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 export default function Header() {
     return (
         <header className="header">
+            {/* Logo develop — image + texte */}
             <Link to="/" className="header__logo">
                 <img src={logo} alt="Logo PotCommun" className="header__logo-img" />
                 <span className="header__logo-name">PotCommun</span>
@@ -34,6 +36,11 @@ export default function Header() {
                         {label}
                     </NavLink>
                 ))}
+
+                {/* Bouton espace association — ta branche */}
+                <Link to="/associations/login" className="header__nav-link header__nav-link--asso">
+                    Espace association
+                </Link>
             </nav>
 
             <div className="header__auth">
