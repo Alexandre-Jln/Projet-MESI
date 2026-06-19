@@ -32,7 +32,6 @@ public class AssociationEntity {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(unique = true)
     @Column(unique = true, length = 250)
     private String siret;
 

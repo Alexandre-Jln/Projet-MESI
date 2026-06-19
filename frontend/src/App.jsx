@@ -15,7 +15,6 @@ export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                {/* ── Pages develop ───────────────────────────────────── */}
                 <Route path="/"             element={<HomePage />} />
                 <Route path="/associations" element={<AssociationsPage />} />
                 <Route path="/boutique"     element={<NotFound />} />

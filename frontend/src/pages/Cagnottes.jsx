@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import "../css/Cagnotte.css";
 
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8082";
+
 export default function Cagnottes() {
     const [cagnottes, setCagnottes] = useState([]);
     const [loading, setLoading]     = useState(true);
     const [erreur, setErreur]       = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/cagnottes")
+        fetch(`${API_URL}/api/cagnottes`)
             .then(r => r.json())
             .then(data => { setCagnottes(data); setLoading(false); })
             .catch(() => { setErreur("Impossible de charger les cagnottes."); setLoading(false); });
