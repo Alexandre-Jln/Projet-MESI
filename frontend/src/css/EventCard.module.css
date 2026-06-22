@@ -1,0 +1,115 @@
+.card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-2px);
+}
+
+.banner {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.initials {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.15);
+    letter-spacing: 0.05em;
+    user-select: none;
+}
+
+.categoryBadge {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+}
+
+.body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.name {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.date {
+    font-size: 0.78rem;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.duration {
+    font-size: 0.72rem;
+    color: #9ca3af;
+    background: #f3f4f6;
+    padding: 2px 7px;
+    border-radius: 10px;
+}
+
+.lieu {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.association {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.synopsis {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: #666;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+@media (min-width: 640px) {
+    .banner  { height: 110px; }
+    .body    { padding: 16px; }
+    .name    { font-size: 0.93rem; }
+    .synopsis { font-size: 0.82rem; }
+}
+
+@media (min-width: 1024px) {
+    .banner   { height: 120px; }
+    .initials { font-size: 2.5rem; }
+    .name     { font-size: 0.95rem; }
+}
