@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage         from "./pages/HomePage";
 import AssociationsPage from "./pages/public/AssociationsPage";
+import EventsPage       from "./pages/public/EventsPage";
 import Login               from "./pages/Login";
 import Register            from "./pages/Register";
 import NotFound            from "./pages/NotFound";
@@ -24,7 +25,7 @@ export default function App() {
                 <Route path="/benevolat"    element={<NotFound />} />
                 <Route path="/login"        element={<Login />} />
                 <Route path="/register"     element={<Register />} />
-                <Route path="/evenements"        element={<NotFound />} />
+                <Route path="/evenements"        element={<EventsPage />} />
                 <Route path="/cagnottes"         element={<Cagnottes />} />
                 <Route path="/cagnottes/creer"   element={<CreateCagnotte />} />
                 <Route path="/cagnottes/:id"     element={<CagnotteDetail />} />
