@@ -8,7 +8,7 @@ const NAV_LINKS = [
     { label: "Boutique",     path: "/boutique" },
     { label: "Solutions",    path: "/solutions" },
     { label: "Évènements",   path: "/evenements" },
-    { label: "Projets",      path: "/projets" },
+    { label: "Cagnottes",    path: "/cagnottes" },
     { label: "Contact",      path: "/contact" },
     { label: "Bénévolat",    path: "/benevolat" },
 ];
