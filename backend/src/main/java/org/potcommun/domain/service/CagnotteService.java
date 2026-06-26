@@ -22,12 +22,12 @@ public class CagnotteService {
         this.stripeService = stripeService;
     }
 
-    /** Retourne toutes les cagnottes actives, les plus récentes en premier. */
-    public List<CagnotteResponse> listerActives() {
-        return repo.findByActifTrueOrderByDateCreationDesc()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+    /** Retourne les cagnottes actives — toutes, ou filtrées par association. */
+    public List<CagnotteResponse> lister(Integer associationId) {
+        var liste = associationId != null
+            ? repo.findByAssociationIdAndActifTrue(associationId)
+            : repo.findByActifTrueOrderByDateCreationDesc();
+        return liste.stream().map(this::toResponse).toList();
     }
 
     /** Retourne une cagnotte par son ID. */
@@ -78,6 +78,30 @@ public class CagnotteService {
 
         cagnotte.setMontantCollecte(cagnotte.getMontantCollecte().add(montant));
         repo.save(cagnotte);
+    }
+
+    /** Retourne toutes les cagnottes d'une association (actives + clôturées) — backoffice. */
+    public List<CagnotteResponse> listerParAssociation(Integer associationId) {
+        return repo.findByAssociationIdOrderByDateCreationDesc(associationId)
+                   .stream().map(this::toResponse).toList();
+    }
+
+    /** Clôture une cagnotte (actif = false). Les dons existants sont conservés. */
+    @Transactional
+    public CagnotteResponse desactiver(Long id) {
+        CagnotteEntity c = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Cagnotte introuvable : " + id));
+        c.setActif(false);
+        return toResponse(repo.save(c));
+    }
+
+    /** Réactive une cagnotte clôturée. */
+    @Transactional
+    public CagnotteResponse activer(Long id) {
+        CagnotteEntity c = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Cagnotte introuvable : " + id));
+        c.setActif(true);
+        return toResponse(repo.save(c));
     }
 
     private CagnotteResponse toResponse(CagnotteEntity e) {

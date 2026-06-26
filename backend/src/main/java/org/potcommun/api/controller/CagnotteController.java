@@ -26,10 +26,31 @@ public class CagnotteController {
         this.assocService = assocService;
     }
 
-    /** GET /api/cagnottes */
+    /**
+     * GET /api/cagnottes
+     * - Sans paramètre          → toutes les cagnottes actives (page publique)
+     * - ?associationId=X        → cagnottes actives d'une association (backoffice)
+     */
     @GetMapping
-    public List<CagnotteResponse> lister() {
-        return service.listerActives();
+    public List<CagnotteResponse> lister(
+            @RequestParam(required = false) Integer associationId,
+            @RequestParam(required = false, defaultValue = "false") boolean includeInactif) {
+        if (includeInactif && associationId != null) {
+            return service.listerParAssociation(associationId);
+        }
+        return service.lister(associationId);
+    }
+
+    /** PATCH /api/cagnottes/{id}/desactiver — clôture une cagnotte (backoffice) */
+    @PatchMapping("/{id}/desactiver")
+    public CagnotteResponse desactiver(@PathVariable Long id) {
+        return service.desactiver(id);
+    }
+
+    /** PATCH /api/cagnottes/{id}/activer — réactive une cagnotte (backoffice) */
+    @PatchMapping("/{id}/activer")
+    public CagnotteResponse activer(@PathVariable Long id) {
+        return service.activer(id);
     }
 
     /** GET /api/cagnottes/{id} */

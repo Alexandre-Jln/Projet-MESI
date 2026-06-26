@@ -180,42 +180,55 @@ CREATE TABLE IF NOT EXISTS campagne_utilisateur (
 INSERT INTO users (email, email_hash, password) VALUES
                                                     ('alice@example.com',
                                                      'ff8d9819fc0e12bf0d24892e45987e249a28dce836a85cad60e28eaaa8c6d976',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('bob@example.com',
                                                      '5ff860bf1190596c7188ab851db691f0f3169c453936e9e1eba2f9a47f7a0018',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('claire.dupont@example.com',
                                                      'c7225c4f222d8e9af0c207ee7adc78bfa0b76f0d7f40e8b5b7e16594b7430cc0',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('marc.leblanc@example.com',
                                                      '21df7363b04fb35382b044146bbc24f3631807af37b9dc9f4f2617fe255ed596',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('sophie.martin@example.com',
                                                      '9bdb5111a39629b9d7a99a864ea2b9906dab3e7f35fbb9b2fa34671c46aad454',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('julien.bernard@example.com',
                                                      '2a458c6ec59e01a138c6e8ff2cef0cb7b0d347ba74853aedc8ba735adaec7571',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('lea.thomas@example.com',
                                                      '5daceea8939fd5a20f399622c064445e82a01d2c05d7ada44d185cede4d51752',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('antoine.petit@example.com',
                                                      'f73d15e78a7e20b8baa615e3c6c463a9efcd31f87b458042bd8897a23276e684',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('marie.rousseau@example.com',
                                                      'b786ca04b169587e7e8a400a4fb90450719855f8bef899427ab491fbad05d026',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy'),
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne'),
                                                     ('pierre.moreau@example.com',
                                                      '6b8a022a8ff9ed95013c02e59820dd7a71a777131b48af4887e7a28835fa7629',
-                                                     '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
+                                                     '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne');
 
-INSERT INTO association (name, categorie, email, siret, siege_social, telephone, latitude, longitude) VALUES
-    ('Les Restos du Cœur',      'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale, 75013 Paris',         '0140123456', 48.856600, 2.352200),
-    ('Greenpeace France',        'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien, 75010 Paris',           '0140212321', 48.873800, 2.350600),
-    ('Croix-Rouge Française',    'Aide humanitaire', 'contact@croix-rouge.fr',   '77567227200329', '98 rue Didot, 75014 Paris',             '0144431100', 48.828200, 2.317300),
-    ('Médecins Sans Frontières', 'Santé',            'info@msf.fr',              '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris', '0140213229', 48.879300, 2.371900),
-    ('WWF France',               'Environnement',    'contact@wwf.fr',           '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484', 48.861500, 2.252200),
-    ('Ligue contre le Cancer',   'Santé',            'info@ligue-cancer.net',    '77563134200021', '14 rue Corvisart, 75013 Paris',         '0153559595', 48.827800, 2.351100);
+INSERT INTO association (name, categorie, email, siret, siege_social, telephone, latitude, longitude, statut) VALUES
+    ('Les Restos du Cœur',      'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale, 75013 Paris',         '0140123456', 48.856600, 2.352200, 'VALIDATED'),
+    ('Greenpeace France',        'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien, 75010 Paris',           '0140212321', 48.873800, 2.350600, 'VALIDATED'),
+    ('Croix-Rouge Française',    'Aide humanitaire', 'contact@croix-rouge.fr',   '77567227200329', '98 rue Didot, 75014 Paris',             '0144431100', 48.828200, 2.317300, 'VALIDATED'),
+    ('Médecins Sans Frontières', 'Santé',            'info@msf.fr',              '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris', '0140213229', 48.879300, 2.371900, 'VALIDATED'),
+    ('WWF France',               'Environnement',    'contact@wwf.fr',           '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484', 48.861500, 2.252200, 'VALIDATED'),
+    ('Ligue contre le Cancer',   'Santé',            'info@ligue-cancer.net',    '77563134200021', '14 rue Corvisart, 75013 Paris',         '0153559595', 48.827800, 2.351100, 'VALIDATED');
+
+-- Compte de test backoffice association  (mot de passe : password123)
+INSERT INTO association (name, categorie, email, email_hash, password_hash, siret, siege_social, statut, iban) VALUES (
+  'Association Test',
+  'Solidarité',
+  'test@association.fr',
+  SHA2(LOWER('test@association.fr'), 256),
+  '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne',
+  '00000000000000',
+  '1 rue de la Paix, 75001 Paris',
+  'VALIDATED',
+  'FR7630006000011234567890189'
+);
 
 INSERT INTO campagne (association_id) VALUES (1),(2),(3),(4),(5),(6);
 
@@ -367,7 +380,7 @@ VALUES (
     'Culture',
     'demo.asso@example.com',
     '3e8a2f1b9c4d7e6f0a5b8c3d2e1f4a7b9c6d3e8f1a4b7c0d5e2f9a6b3c8d1e4',
-    '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy',
+    '$2y$10$ypLKVCSEjc/MqdY7yEsYm.aUS3pbxU.1ylfA3B7Tm5nQMNbUZr4ne',
     '12345678901234',
     '1 rue de la Démo, 75001 Paris',
     '0100000000',

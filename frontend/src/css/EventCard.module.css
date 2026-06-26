@@ -14,12 +14,19 @@
 }
 
 .banner {
-    height: 100px;
+    height: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+}
+
+.bannerImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .initials {
@@ -102,14 +109,14 @@
 }
 
 @media (min-width: 640px) {
-    .banner  { height: 110px; }
-    .body    { padding: 16px; }
-    .name    { font-size: 0.93rem; }
+    .banner   { height: 150px; }
+    .body     { padding: 16px; }
+    .name     { font-size: 0.93rem; }
     .synopsis { font-size: 0.82rem; }
 }
 
 @media (min-width: 1024px) {
-    .banner   { height: 120px; }
+    .banner   { height: 160px; }
     .initials { font-size: 2.5rem; }
     .name     { font-size: 0.95rem; }
 }

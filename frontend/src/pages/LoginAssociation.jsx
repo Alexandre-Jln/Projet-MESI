@@ -56,6 +56,8 @@ export default function LoginAssociation() {
                 id:             data.id,
                 nom:            data.nom,
                 email:          data.email,
+                siret:          data.siret,
+                categorie:      data.categorie,
                 statut:         data.statut,
                 ibanEnregistre: data.ibanEnregistre,
             };
@@ -66,7 +68,7 @@ export default function LoginAssociation() {
             if (data.statut === "PENDING")   { setEtape("pending");  return; }
             if (data.statut === "REJECTED")  { setEtape("rejected"); return; }
             if (!data.ibanEnregistre)        { setEtape("iban");     return; }
-            navigate("/cagnottes/creer");
+            navigate("/associations/backoffice");
 
         } catch {
             setErrLogin("Impossible de contacter le serveur.");
@@ -113,6 +115,7 @@ export default function LoginAssociation() {
             sessionStorage.setItem("assoc_session",
                 JSON.stringify({ ...session, ibanEnregistre: true }));
             setIbanOk(true);
+            setTimeout(() => navigate("/associations/backoffice"), 1500);
 
         } catch {
             setErrIban("Impossible de contacter le serveur.");
