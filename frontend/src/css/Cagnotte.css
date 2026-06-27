@@ -1,0 +1,248 @@
+/* =============================================================
+   Cagnotte.css — styles pour les pages cagnotte & don
+   ============================================================= */
+
+/* ── Page liste ─────────────────────────────────────────────── */
+.cagnottes-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.cagnottes-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.cagnottes-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.btn-creer {
+    background: #635bff;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.btn-creer:hover { background: #4f46e5; }
+
+.cagnottes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.cagnotte-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+.cagnotte-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.cagnotte-card h2 { font-size: 1.1rem; font-weight: 600; }
+.cagnotte-desc    { font-size: 0.9rem; color: #6b7280; line-height: 1.5; }
+.cagnotte-fin     { font-size: 0.8rem; color: #9ca3af; }
+.cagnotte-collecte { font-size: 0.95rem; font-weight: 600; color: #635bff; }
+.cagnotte-message  { text-align: center; padding: 3rem; color: #6b7280; }
+.cagnotte-message.erreur { color: #dc2626; }
+
+/* ── Barre de progression ───────────────────────────────────── */
+.cagnotte-progress { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.progress-bar {
+    background: #e5e7eb;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+}
+.progress-bar.large { height: 14px; }
+
+.progress-fill {
+    background: linear-gradient(90deg, #635bff, #818cf8);
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.6s ease;
+}
+
+.progress-label { font-size: 0.85rem; color: #6b7280; }
+
+/* ── Page formulaire création ───────────────────────────────── */
+.cagnotte-form-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    background: #f9fafb;
+}
+
+.cagnotte-form-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.cagnotte-form-card h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 1.5rem; }
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group label { font-size: 0.9rem; font-weight: 500; color: #374151; }
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+    resize: vertical;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: #635bff; }
+
+.input-error  { border-color: #dc2626 !important; }
+.erreur-msg   { font-size: 0.82rem; color: #dc2626; }
+
+.form-erreur-api {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: #dc2626;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.btn-submit {
+    width: 100%;
+    background: #635bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+.btn-submit:hover:not(:disabled) { background: #4f46e5; }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Page détail + don ──────────────────────────────────────── */
+.cagnotte-detail-page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}
+
+.cagnotte-detail-header {
+    margin-bottom: 2.5rem;
+}
+
+.cagnotte-detail-header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+.cagnotte-collecte.large   { font-size: 1.2rem; font-weight: 700; color: #635bff; }
+
+.cagnotte-don-section {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.cagnotte-don-section h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.25rem; }
+
+/* Montants rapides */
+.montant-rapides {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.btn-montant {
+    flex: 1;
+    padding: 0.55rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.btn-montant:hover { border-color: #635bff; color: #635bff; }
+.btn-montant.actif { border-color: #635bff; background: #635bff; color: #fff; }
+
+.montant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.montant-form label { font-size: 0.9rem; font-weight: 500; color: #374151; }
+
+.montant-form input {
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.montant-form input:focus { border-color: #635bff; }
+
+/* Formulaire Stripe */
+.stripe-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* Succès */
+.don-succes {
+    text-align: center;
+    padding: 1.5rem;
+}
+.succes-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    background: #dcfce7;
+    color: #16a34a;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.don-succes h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; }
+.don-succes p  { color: #6b7280; }

@@ -7,11 +7,17 @@ import org.potcommun.infrastructure.persistence.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
+
 /**
  * Service métier utilisateur.
- * <p>
- * Correction architecture hexagonale : le domain n'importe plus aucun DTO
- * de la couche api. Le controller est responsable de la conversion DTO ↔ primitifs.
+ *
+ * Architecture hexagonale (develop) : le service prend des primitives, pas des DTOs.
+ * Sécurité (ta branche) : l'email est hashé en SHA-256 pour les lookups,
+ * et chiffré en AES-256-GCM en base via EmailEncryptionConverter.
  */
 @Service
 public class UserService {
@@ -26,34 +32,31 @@ public class UserService {
 
     /**
      * Crée un nouvel utilisateur.
-     *
-     * @param email    adresse email (unique)
-     * @param password mot de passe en clair (sera haché)
-     * @return l'entité persistée
-     * @throws UserAlreadyExistsException si l'email est déjà utilisé
+     * Signature develop (primitives) + hashing de ta branche.
      */
     public UserEntity register(String email, String password) {
-        if (repo.findByEmail(email).isPresent()) {
+        String hash = hashEmail(email);
+
+        if (repo.findByEmailHash(hash).isPresent()) {
             throw new UserAlreadyExistsException(email);
         }
 
         UserEntity user = new UserEntity();
-        user.setEmail(email);
-        user.setPassword(encoder.encode(password));
+        user.setEmail(email);                        // chiffré via EmailEncryptionConverter
+        user.setEmailHash(hash);                     // SHA-256 pour les lookups
+        user.setPassword(encoder.encode(password));  // BCrypt
 
         return repo.save(user);
     }
 
     /**
      * Authentifie un utilisateur.
-     *
-     * @param email    adresse email
-     * @param password mot de passe en clair
-     * @return l'entité authentifiée
-     * @throws InvalidCredentialsException si les identifiants sont incorrects
+     * Signature develop (primitives) + lookup par hash de ta branche.
      */
     public UserEntity login(String email, String password) {
-        UserEntity user = repo.findByEmail(email)
+        String hash = hashEmail(email);
+
+        UserEntity user = repo.findByEmailHash(hash)
                 .orElseThrow(() -> new InvalidCredentialsException("Identifiants invalides"));
 
         if (!encoder.matches(password, user.getPassword())) {
@@ -61,5 +64,15 @@ public class UserService {
         }
 
         return user;
+    }
+
+    private String hashEmail(String email) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(email.toLowerCase().getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 indisponible", e);
+        }
     }
 }
