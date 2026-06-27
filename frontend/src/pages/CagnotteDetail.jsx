@@ -7,6 +7,7 @@ import "../css/Cagnotte.css";
 
 // Charge Stripe une seule fois (clé publique depuis les variables d'env Vite)
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8082";
 
 // ── Formulaire de paiement (rendu à l'intérieur du contexte Stripe <Elements>) ──
 function FormulairePaiement({ cagnotteId, montant, onSucces }) {
@@ -35,7 +36,7 @@ function FormulairePaiement({ cagnotteId, montant, onSucces }) {
 
         // Paiement confirmé côté Stripe → on notifie le backend
         await fetch(
-            `http://localhost:8080/api/cagnottes/${cagnotteId}/don/confirmer?montant=${montant}`,
+            `${API_URL}/api/cagnottes/${cagnotteId}/don/confirmer?montant=${montant}`,
             { method: "POST" }
         );
         onSucces();
@@ -67,7 +68,7 @@ export default function CagnotteDetail() {
     const [donReussi,    setDonReussi]    = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/cagnottes/${id}`)
+        fetch(`${API_URL}/api/cagnottes/${id}`)
             .then(r => { if (!r.ok) throw new Error(); return r.json(); })
             .then(data => { setCagnotte(data); setLoading(false); })
             .catch(() => { setErreur("Cagnotte introuvable."); setLoading(false); });
@@ -82,7 +83,7 @@ export default function CagnotteDetail() {
         setClientSecret(null);
 
         try {
-            const res = await fetch(`http://localhost:8080/api/cagnottes/${id}/don/initier`, {
+            const res = await fetch(`${API_URL}/api/cagnottes/${id}/don/initier`, {
                 method:  "POST",
                 headers: { "Content-Type": "application/json" },
                 body:    JSON.stringify({ montant: m }),

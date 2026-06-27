@@ -2,6 +2,7 @@ package org.potcommun.infrastructure.persistence;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "association")
@@ -13,13 +14,14 @@ public class AssociationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 150)
     private String name;
 
+    @Column(length = 250)
     private String categorie;
 
     /** Email de contact public (non chiffré — donnée publique pour une association). */
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 250)
     private String email;
 
     /** SHA-256(lowercase(email)) pour les lookups d'authentification. */
@@ -30,12 +32,13 @@ public class AssociationEntity {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(unique = true)
+    @Column(unique = true, length = 250)
     private String siret;
 
-    @Column(name = "siege_social")
+    @Column(name = "siege_social", length = 250)
     private String siegeSocial;
 
+    @Column(length = 20)
     private String telephone;
 
     @Column(columnDefinition = "TEXT")
@@ -47,6 +50,11 @@ public class AssociationEntity {
      */
     private String iban;
 
+    @Column(precision = 9, scale = 6)
+    private BigDecimal latitude;
+
+    @Column(precision = 9, scale = 6)
+    private BigDecimal longitude;
     /**
      * Statut du compte association :
      *  PENDING   → inscription reçue, en attente de validation admin
@@ -113,4 +121,7 @@ public class AssociationEntity {
 
     public String getMotifRejet()                       { return motifRejet; }
     public void   setMotifRejet(String motifRejet)      { this.motifRejet = motifRejet; }
+
+    public BigDecimal getLatitude()   { return latitude; }
+    public BigDecimal getLongitude()  { return longitude; }
 }

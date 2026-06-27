@@ -1,6 +1,10 @@
 -- =============================================================
 --  PotCommun – Script d'initialisation MySQL
+--  Exécuté automatiquement au premier démarrage du conteneur Docker
 -- =============================================================
+
+SET NAMES utf8mb4;
+SET character_set_client = utf8mb4;
 
 CREATE DATABASE IF NOT EXISTS potcommun
     CHARACTER SET utf8mb4
@@ -32,6 +36,8 @@ CREATE TABLE IF NOT EXISTS association (
     siret        VARCHAR(250) UNIQUE,
     siege_social VARCHAR(250),
     telephone    VARCHAR(20),
+    latitude     DECIMAL(9,6) NULL,
+    longitude    DECIMAL(9,6) NULL,
     PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -45,6 +51,8 @@ CREATE TABLE IF NOT EXISTS evenement (
     release_dt     DATE,
     synopsis       TEXT,
     association_id INT          NOT NULL,
+    latitude       DECIMAL(9,6) NULL,
+    longitude      DECIMAL(9,6) NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_evenement_association
     FOREIGN KEY (association_id) REFERENCES association (id)
@@ -81,6 +89,7 @@ CREATE TABLE IF NOT EXISTS commande (
     ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Clé étrangère paiement → commande (ajoutée après création de commande)
 ALTER TABLE paiement
     ADD CONSTRAINT fk_paiement_commande
         FOREIGN KEY (commande_id) REFERENCES commande (id)
@@ -200,29 +209,92 @@ INSERT INTO users (email, email_hash, password) VALUES
                                                      '6b8a022a8ff9ed95013c02e59820dd7a71a777131b48af4887e7a28835fa7629',
                                                      '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy');
 
-INSERT INTO association (name, categorie, email, siret, siege_social, telephone) VALUES
-                                                                                     ('Les Restos du Cœur',      'Aide alimentaire',  'contact@restosducoeur.fr',  '30251719200030', '75 rue Nationale, 75010 Paris',        '0140123456'),
-                                                                                     ('Greenpeace France',       'Environnement',     'info@greenpeace.fr',         '39399240200020', '13 rue Enghien, 75010 Paris',          '0140212321'),
-                                                                                     ('Croix-Rouge Française',   'Aide humanitaire',  'contact@croix-rouge.fr',     '77567227200329', '98 rue Didot, 75014 Paris',            '0144431100'),
-                                                                                     ('Médecins Sans Frontières','Santé',              'info@msf.fr',                '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris','0140213229'),
-                                                                                     ('WWF France',              'Environnement',     'contact@wwf.fr',             '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484'),
-                                                                                     ('Ligue contre le Cancer',  'Santé',             'info@ligue-cancer.net',      '77563134200021', '14 rue Corvisart, 75013 Paris',        '0153559595');
+INSERT INTO association (name, categorie, email, siret, siege_social, telephone, latitude, longitude) VALUES
+    ('Les Restos du Cœur',      'Aide alimentaire', 'contact@restosducoeur.fr', '30251719200030', '75 rue Nationale, 75013 Paris',         '0140123456', 48.856600, 2.352200),
+    ('Greenpeace France',        'Environnement',    'info@greenpeace.fr',       '39399240200020', '13 rue Enghien, 75010 Paris',           '0140212321', 48.873800, 2.350600),
+    ('Croix-Rouge Française',    'Aide humanitaire', 'contact@croix-rouge.fr',   '77567227200329', '98 rue Didot, 75014 Paris',             '0144431100', 48.828200, 2.317300),
+    ('Médecins Sans Frontières', 'Santé',            'info@msf.fr',              '30252161900050', '14-34 avenue Jean Jaurès, 75019 Paris', '0140213229', 48.879300, 2.371900),
+    ('WWF France',               'Environnement',    'contact@wwf.fr',           '42761800200012', '1 carrefour de Longchamp, 75016 Paris', '0155258484', 48.861500, 2.252200),
+    ('Ligue contre le Cancer',   'Santé',            'info@ligue-cancer.net',    '77563134200021', '14 rue Corvisart, 75013 Paris',         '0153559595', 48.827800, 2.351100);
 
 INSERT INTO campagne (association_id) VALUES (1),(2),(3),(4),(5),(6);
 
-INSERT INTO evenement (name, length, release_dt, synopsis, association_id) VALUES
-                                                                               ('Gala de charité 2025',               180, '2025-06-15', 'Soirée annuelle de levée de fonds avec vente aux enchères et dîner.',                  1),
-                                                                               ('Collecte hivernale – Paris Nord',     90, '2025-11-28', 'Grande collecte de denrées alimentaires dans les supermarchés partenaires.',           1),
-                                                                               ('Marche pour le climat',              120, '2025-09-22', 'Manifestation nationale pour une politique climatique ambitieuse.',                    2),
-                                                                               ('Forum environnemental 2025',         240, '2025-10-11', 'Journée de conférences et d'ateliers sur la transition écologique.',                   2),
-    ('Journée portes ouvertes Croix-Rouge',180, '2025-05-08', 'Découverte des actions locales, démonstrations de secourisme et bénévolat.',           3),
-    ('Concert caritatif Solidarité',       150, '2025-07-04', 'Concert de musique classique au profit des victimes de catastrophes naturelles.',      3),
-    ('Conférence : Soigner en zones de guerre',120,'2025-08-20','Témoignages de médecins terrain sur l'accès aux soins en zones de conflit.',         4),
-                                                                               ('Vente de solidarité MSF',             60, '2025-12-06', 'Marché solidaire avec objets artisanaux rapportés par les équipes de mission.',        4),
-                                                                               ('Nettoyage des berges de la Seine',   180, '2025-04-19', 'Action citoyenne de dépollution des rives de la Seine avec les bénévoles WWF.',        5),
-                                                                               ('Expo photo : Espèces en danger',     300, '2025-06-05', 'Exposition photographique sur la biodiversité mondiale menacée.',                      5),
-                                                                               ('Octobre Rose – Marche solidaire',    120, '2025-10-04', 'Marche de 10 km pour soutenir la recherche contre le cancer du sein.',                 6),
-                                                                               ('Conférence prévention cancer',        90, '2025-11-15', 'Conférence médicale sur le dépistage précoce et les facteurs de risque.',              6);
+INSERT INTO evenement (name, length, release_dt, synopsis, association_id, latitude, longitude) VALUES
+    -- Événements passés (archives)
+    ('Gala de charité 2025',  180, '2025-06-15', 'Soirée annuelle de levée de fonds.',      1, 48.856600, 2.352200),
+    ('Marche pour le climat', 120, '2025-09-22', 'Manifestation pacifique pour le climat.', 2, 48.858400, 2.294500),
+
+    -- Les Restos du Cœur (id=1)
+    ('Collecte de rentrée 2026',         30, '2026-07-01',
+     'Grande collecte de denrées non périssables dans les supermarchés partenaires de toute la région parisienne.',
+     1, 48.8566, 2.3522),
+    ('Atelier cuisine anti-gaspillage',   7, '2026-08-10',
+     'Ateliers pratiques pour apprendre à cuisiner des repas équilibrés avec des ingrédients simples et peu coûteux.',
+     1, 48.8510, 2.3600),
+    ('Gala de bienfaisance automne',      1, '2026-09-15',
+     'Soirée annuelle de levée de fonds avec vente aux enchères, concert et dîner au profit des familles en difficulté.',
+     1, 48.8566, 2.3522),
+    ('Marché solidaire de Noël',         30, '2026-11-28',
+     'Marché de Noël associatif avec produits artisanaux, tombola et animations pour soutenir nos actions alimentaires.',
+     1, 48.8480, 2.3520),
+
+    -- Greenpeace France (id=2)
+    ('Nettoyage des berges de la Seine',  1, '2026-07-12',
+     'Action citoyenne de dépollution des rives de la Seine. Matériel fourni, inscription obligatoire.',
+     2, 48.8584, 2.2945),
+    ('Marche pour le Climat Paris 2026',  1, '2026-09-20',
+     'Manifestation nationale pour une politique climatique ambitieuse et la sortie des énergies fossiles.',
+     2, 48.8566, 2.3522),
+    ('Forum écologie urbaine',            3, '2026-10-05',
+     'Trois jours de conférences, ateliers et débats autour de la ville durable, mobilités vertes et éco-conception.',
+     2, 48.8738, 2.3506),
+    ('Journée zéro déchet Paris',         1, '2026-11-08',
+     'Sensibilisation au tri, au compostage et à la réduction des déchets dans nos quartiers. Stands et démonstrations.',
+     2, 48.8566, 2.3522),
+
+    -- Croix-Rouge Française (id=3)
+    ('Formation premiers secours',        2, '2026-07-20',
+     'Stage PSC1 ouvert à tous. Apprenez les gestes qui sauvent en 7 heures de formation théorique et pratique.',
+     3, 48.8282, 2.3173),
+    ('Concert caritatif Solidarité 2026', 1, '2026-08-25',
+     'Concert de musique classique et jazz au bénéfice des victimes de catastrophes. Entrée sur don libre.',
+     3, 48.8590, 2.3460),
+    ('Journée portes ouvertes Croix-Rouge', 1, '2026-09-05',
+     'Découvrez nos équipes, nos missions locales et comment devenir bénévole. Démonstrations de secourisme incluses.',
+     3, 48.8282, 2.3173),
+    ('Collecte de sang – semaine nationale', 14, '2026-10-14',
+     'Points de collecte de sang dans toute la ville. Chaque don peut sauver jusqu''à trois vies.',
+     3, 48.8282, 2.3173),
+
+    -- Médecins Sans Frontières (id=4)
+    ('Conférence urgences sanitaires mondiales', 1, '2026-08-28',
+     'Témoignages de médecins de retour de mission sur l''accès aux soins en zones de guerre et d''épidémie.',
+     4, 48.8793, 2.3719),
+    ('Expo humanitaire – Soigner sans frontières', 21, '2026-09-10',
+     'Exposition photographique immersive sur les missions MSF dans les zones de conflit et catastrophes naturelles.',
+     4, 48.8793, 2.3719),
+    ('Marché solidaire MSF – Décembre',   7, '2026-12-05',
+     'Marché de fin d''année avec objets artisanaux rapportés par les équipes MSF et produits du commerce équitable.',
+     4, 48.8793, 2.3719),
+
+    -- WWF France (id=5)
+    ('Nettoyage du Bois de Boulogne',     1, '2026-07-05',
+     'Collecte de déchets dans le Bois de Boulogne avec les bénévoles WWF. Matériel de collecte fourni sur place.',
+     5, 48.8615, 2.2522),
+    ('Journée mondiale des océans',       1, '2026-07-28',
+     'Conférences, projections et ateliers pour sensibiliser à la protection des océans et de la vie marine.',
+     5, 48.8615, 2.2522),
+    ('Exposition biodiversité en danger', 30, '2026-10-01',
+     'Grande exposition photographique sur les espèces menacées. Intervenants scientifiques tout au long du mois.',
+     5, 48.8615, 2.2522),
+
+    -- Ligue contre le Cancer (id=6)
+    ('Octobre Rose – Marche solidaire',  31, '2026-10-01',
+     'Un mois de mobilisation pour la recherche contre le cancer du sein. Marches, conférences et dépistages gratuits.',
+     6, 48.8278, 2.3511),
+    ('Conférence prévention des cancers',  1, '2026-11-18',
+     'Conférence médicale grand public sur le dépistage précoce, les facteurs de risque et les avancées thérapeutiques.',
+     6, 48.8278, 2.3511);
 
 INSERT INTO adhesion (user_id, association_id, role, date) VALUES
                                                                (1, 1, 'admin',  '2023-09-01'), (2, 1, 'membre', '2023-10-15'), (3, 1, 'membre', '2024-01-10'),

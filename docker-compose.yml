@@ -51,7 +51,7 @@ services:
       APP_ENCRYPTION_KEY: ${APP_ENCRYPTION_KEY}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
     ports:
-      - "8080:8080"
+      - "8080:8082"
     networks:
       - potcommun_net
 

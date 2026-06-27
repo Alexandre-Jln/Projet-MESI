@@ -1,5 +1,6 @@
 package org.potcommun.infrastructure.persistence;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface AssociationRepository extends JpaRepository<AssociationEntity, 
 
     /** Liste les associations validées (pour le select de création de cagnotte). */
     List<AssociationEntity> findByStatut(AssociationEntity.Statut statut);
+    List<AssociationEntity> findByLatitudeIsNotNullAndLongitudeIsNotNull(Pageable pageable);
 }
