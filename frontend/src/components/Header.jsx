@@ -1,8 +1,8 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import logo from "../assets/logopotcommun.png";
 import "../css/Header.css";
 
-// Navigation develop — tous leurs liens conservés
 const NAV_LINKS = [
     { label: "Associations", path: "/associations" },
     { label: "Boutique",     path: "/boutique" },
@@ -14,9 +14,16 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
+
     return (
         <header className="header">
-            {/* Logo develop — image + texte */}
             <Link to="/" className="header__logo">
                 <img src={logo} alt="Logo PotCommun" className="header__logo-img" />
                 <span className="header__logo-name">PotCommun</span>
@@ -37,19 +44,32 @@ export default function Header() {
                     </NavLink>
                 ))}
 
-                {/* Bouton espace association — ta branche */}
                 <Link to="/associations/login" className="header__nav-link header__nav-link--asso">
                     Espace association
                 </Link>
             </nav>
 
             <div className="header__auth">
-                <Link to="/login" className="header__auth-btn header__auth-btn--login">
-                    Connexion
-                </Link>
-                <Link to="/register" className="header__auth-btn header__auth-btn--register">
-                    S&apos;inscrire
-                </Link>
+                {user ? (
+                    <>
+                        <span className="header__auth-user">Bonjour {user.email}</span>
+                        <button
+                            className="header__auth-btn header__auth-btn--login"
+                            onClick={handleLogout}
+                        >
+                            Déconnexion
+                        </button>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/login" className="header__auth-btn header__auth-btn--login">
+                            Connexion
+                        </Link>
+                        <Link to="/register" className="header__auth-btn header__auth-btn--register">
+                            S&apos;inscrire
+                        </Link>
+                    </>
+                )}
             </div>
         </header>
     );

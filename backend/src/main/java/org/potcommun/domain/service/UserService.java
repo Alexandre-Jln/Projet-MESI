@@ -12,57 +12,45 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 
-/**
- * Service métier utilisateur.
- *
- * Architecture hexagonale (develop) : le service prend des primitives, pas des DTOs.
- * Sécurité (ta branche) : l'email est hashé en SHA-256 pour les lookups,
- * et chiffré en AES-256-GCM en base via EmailEncryptionConverter.
- */
 @Service
 public class UserService {
 
     private final UserRepository  repo;
     private final PasswordEncoder encoder;
+    private final EmailVerificationService emailVerificationService;
 
-    public UserService(UserRepository repo, PasswordEncoder encoder) {
+    public UserService(UserRepository repo,
+                       PasswordEncoder encoder,
+                       EmailVerificationService emailVerificationService) {
         this.repo    = repo;
         this.encoder = encoder;
+        this.emailVerificationService = emailVerificationService;
     }
 
-    /**
-     * Crée un nouvel utilisateur.
-     * Signature develop (primitives) + hashing de ta branche.
-     */
     public UserEntity register(String email, String password) {
         String hash = hashEmail(email);
-
         if (repo.findByEmailHash(hash).isPresent()) {
             throw new UserAlreadyExistsException(email);
         }
 
         UserEntity user = new UserEntity();
-        user.setEmail(email);                        // chiffré via EmailEncryptionConverter
-        user.setEmailHash(hash);                     // SHA-256 pour les lookups
-        user.setPassword(encoder.encode(password));  // BCrypt
+        user.setEmail(email);
+        user.setEmailHash(hash);
+        user.setPassword(encoder.encode(password));
+        UserEntity saved = repo.save(user);
 
-        return repo.save(user);
+        emailVerificationService.sendVerificationEmail(saved, email);
+
+        return saved;
     }
 
-    /**
-     * Authentifie un utilisateur.
-     * Signature develop (primitives) + lookup par hash de ta branche.
-     */
     public UserEntity login(String email, String password) {
         String hash = hashEmail(email);
-
         UserEntity user = repo.findByEmailHash(hash)
                 .orElseThrow(() -> new InvalidCredentialsException("Identifiants invalides"));
-
         if (!encoder.matches(password, user.getPassword())) {
             throw new InvalidCredentialsException("Identifiants invalides");
         }
-
         return user;
     }
 

@@ -1,35 +1,53 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { useAuth } from "../context/AuthContext";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
 
 export default function Login() {
-    const [email,    setEmail]    = useState("");
-    const [password, setPassword] = useState("");
-    const [error,    setError]    = useState(null);
-    const [loading,  setLoading]  = useState(false);
+    const [email,         setEmail]         = useState("");
+    const [password,      setPassword]      = useState("");
+    const [error,         setError]         = useState(null);
+    const [loading,       setLoading]       = useState(false);
+    const [captchaToken,  setCaptchaToken]  = useState(null);
+    const captchaRef = useRef(null);
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault();
         setError(null);
+
+        if (!captchaToken) {
+            setError("Veuillez compléter le captcha.");
+            return;
+        }
+
         setLoading(true);
 
         try {
             const res = await fetch(`${API_URL}/auth/login`, {
                 method:  "POST",
                 headers: { "Content-Type": "application/json" },
-                body:    JSON.stringify({ email, password }),
+                body:    JSON.stringify({ email, password, captchaToken }),
             });
 
             if (res.ok) {
-                // TODO : stocker le token / rediriger
+                const data = await res.json();
+                login(data);
+                navigate("/");
             } else {
                 const data = await res.json().catch(() => ({}));
-                setError(data.message ?? "Identifiants invalides.");
+                setError(data.message ?? data.error ?? "Identifiants invalides.");
+                captchaRef.current?.resetCaptcha();
+                setCaptchaToken(null);
             }
         } catch {
             setError("Impossible de joindre le serveur. Vérifiez votre connexion.");
+            captchaRef.current?.resetCaptcha();
+            setCaptchaToken(null);
         } finally {
             setLoading(false);
         }
@@ -75,7 +93,18 @@ export default function Login() {
                         />
                     </div>
 
-                    <button className="auth-btn" type="submit" disabled={loading}>
+                    <HCaptcha
+                        sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                        onVerify={(token) => setCaptchaToken(token)}
+                        onExpire={() => setCaptchaToken(null)}
+                        ref={captchaRef}
+                    />
+
+                    <button
+                        className="auth-btn"
+                        type="submit"
+                        disabled={loading || !captchaToken}
+                    >
                         {loading ? "Connexion…" : "Se connecter"}
                     </button>
 
@@ -83,14 +112,6 @@ export default function Login() {
                         Mot de passe oublié ?
                     </a>
                 </form>
-
-                {/* Séparateur + lien espace association */}
-                <div className="auth-switch">
-                    <span>Vous représentez une association ?</span>
-                    <Link to="/associations/login" className="auth-switch__link">
-                        Connexion espace association →
-                    </Link>
-                </div>
             </div>
         </main>
     );

@@ -1,39 +1,66 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
 
 export default function Register() {
-    const [email,    setEmail]    = useState("");
-    const [password, setPassword] = useState("");
-    const [error,    setError]    = useState(null);
-    const [loading,  setLoading]  = useState(false);
+    const [email,         setEmail]         = useState("");
+    const [password,      setPassword]      = useState("");
+    const [error,         setError]         = useState(null);
+    const [success,       setSuccess]       = useState(false);
+    const [loading,       setLoading]       = useState(false);
+    const [captchaToken,  setCaptchaToken]  = useState(null);
+    const captchaRef = useRef(null);
 
     const submit = async (e) => {
         e.preventDefault();
         setError(null);
+
+        if (!captchaToken) {
+            setError("Veuillez compléter le captcha.");
+            return;
+        }
+
         setLoading(true);
 
         try {
             const res = await fetch(`${API_URL}/auth/register`, {
                 method:  "POST",
                 headers: { "Content-Type": "application/json" },
-                body:    JSON.stringify({ email, password }),
+                body:    JSON.stringify({ email, password, captchaToken }),
             });
 
             if (res.ok) {
-                // TODO : rediriger vers /login ou connecter directement
+                setSuccess(true);
             } else {
                 const data = await res.json().catch(() => ({}));
-                setError(data.message ?? "Erreur lors de l'inscription.");
+                setError(data.message ?? data.error ?? "Erreur lors de l'inscription.");
+                captchaRef.current?.resetCaptcha();
+                setCaptchaToken(null);
             }
         } catch {
             setError("Impossible de joindre le serveur. Vérifiez votre connexion.");
+            captchaRef.current?.resetCaptcha();
+            setCaptchaToken(null);
         } finally {
             setLoading(false);
         }
     };
+
+    if (success) {
+        return (
+            <main className="auth-page">
+                <div className="auth-card">
+                    <h2 className="auth-card__title">Vérifiez votre boîte mail</h2>
+                    <p>
+                        Un email de confirmation a été envoyé à <strong>{email}</strong>.
+                        Cliquez sur le lien reçu pour activer votre compte.
+                    </p>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="auth-page">
@@ -75,18 +102,21 @@ export default function Register() {
                         />
                     </div>
 
-                    <button className="auth-btn" type="submit" disabled={loading}>
+                    <HCaptcha
+                        sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                        onVerify={(token) => setCaptchaToken(token)}
+                        onExpire={() => setCaptchaToken(null)}
+                        ref={captchaRef}
+                    />
+
+                    <button
+                        className="auth-btn"
+                        type="submit"
+                        disabled={loading || !captchaToken}
+                    >
                         {loading ? "Création…" : "S'enregistrer"}
                     </button>
                 </form>
-
-                {/* Séparateur + lien espace association */}
-                <div className="auth-switch">
-                    <span>Vous représentez une association ?</span>
-                    <Link to="/associations/register" className="auth-switch__link">
-                        Inscrire mon association →
-                    </Link>
-                </div>
             </div>
         </main>
     );
