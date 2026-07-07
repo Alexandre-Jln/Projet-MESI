@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../css/Backoffice.css";
+import { decodeAssocId } from "../utils/assocToken";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
 
@@ -400,6 +401,10 @@ function TabEvenements({ session }) {
     const [saving,        setSaving]        = useState(false);
     const [photos,        setPhotos]        = useState([]);
     const [photoPreviews, setPhotoPreviews] = useState([]);
+    const [editEv,        setEditEv]        = useState(null);
+    const [editForm,      setEditForm]      = useState({ name: "", synopsis: "", releaseDt: "", duration: "" });
+    const [editErreurs,   setEditErreurs]   = useState({});
+    const [editSaving,    setEditSaving]    = useState(false);
 
     const today = new Date().toISOString().split("T")[0];
 
@@ -517,6 +522,56 @@ function TabEvenements({ session }) {
         }
     };
 
+    const ouvrirEdit = (ev) => {
+        setEditEv(ev);
+        setEditForm({
+            name:      ev.name      ?? "",
+            synopsis:  ev.synopsis  ?? "",
+            releaseDt: ev.releaseDt ?? "",
+            duration:  ev.duration  != null ? String(ev.duration) : "",
+        });
+        setEditErreurs({});
+    };
+
+    const changerEdit = (e) => {
+        setEditForm(f => ({ ...f, [e.target.name]: e.target.value }));
+        setEditErreurs(err => ({ ...err, [e.target.name]: null }));
+    };
+
+    const modifier = async (isBrouillon = false) => {
+        const errs = {};
+        if (!editForm.name.trim()) errs.name = "Le nom est obligatoire.";
+        if (!isBrouillon && !editForm.releaseDt) errs.releaseDt = "La date est obligatoire pour publier.";
+        if (Object.keys(errs).length) { setEditErreurs(errs); return; }
+
+        setEditSaving(true);
+        try {
+            const res = await fetch(`${API_URL}/evenements/update/${editEv.id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name:      editForm.name,
+                    synopsis:  editForm.synopsis || null,
+                    releaseDt: editForm.releaseDt || null,
+                    duration:  editForm.duration ? parseInt(editForm.duration) : null,
+                    brouillon: isBrouillon,
+                }),
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                setFlash({ type: "erreur", msg: data.error ?? "Erreur lors de la modification." });
+                return;
+            }
+            setFlash({ type: "ok", msg: isBrouillon ? "Événement repassé en brouillon." : "Événement mis à jour !" });
+            setEditEv(null);
+            charger();
+        } catch {
+            setFlash({ type: "erreur", msg: "Impossible de contacter le serveur." });
+        } finally {
+            setEditSaving(false);
+        }
+    };
+
     const statut = (ev) => {
         if (ev.brouillon) return { label: "Brouillon", cls: "bo-badge--pending" };
         if (!ev.releaseDt) return { label: "Brouillon", cls: "bo-badge--pending" };
@@ -591,6 +646,9 @@ function TabEvenements({ session }) {
                                 )}
                             </div>
                             <div className="bo-item__actions">
+                                <button className="bo-btn-secondary" onClick={() => ouvrirEdit(ev)}>
+                                    Modifier
+                                </button>
                                 <button className="bo-btn-danger" onClick={() => supprimer(ev.id)}>
                                     Supprimer
                                 </button>
@@ -684,6 +742,59 @@ function TabEvenements({ session }) {
                                 <button type="button" className="bo-btn-primary"
                                         onClick={() => creer(false)} disabled={saving}>
                                     {saving ? "Publication…" : "Publier"}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
+            {/* Modal édition */}
+            {editEv && (
+                <div className="bo-modal-overlay"
+                     onClick={e => e.target === e.currentTarget && setEditEv(null)}>
+                    <div className="bo-modal">
+                        <h3>Modifier l'événement</h3>
+                        <form onSubmit={e => e.preventDefault()} noValidate>
+                            <div className="bo-form-group">
+                                <label htmlFor="edit-name">Nom de l'événement *</label>
+                                <input id="edit-name" name="name" type="text"
+                                    value={editForm.name} onChange={changerEdit} />
+                                {editErreurs.name && <span className="bo-erreur">{editErreurs.name}</span>}
+                            </div>
+
+                            <div className="bo-form-group">
+                                <label htmlFor="edit-synopsis">Description</label>
+                                <textarea id="edit-synopsis" name="synopsis" rows={3}
+                                    value={editForm.synopsis} onChange={changerEdit} />
+                            </div>
+
+                            <div className="bo-form-row">
+                                <div className="bo-form-group">
+                                    <label htmlFor="edit-date">Date de début</label>
+                                    <input id="edit-date" name="releaseDt" type="date"
+                                        value={editForm.releaseDt} onChange={changerEdit} />
+                                    {editErreurs.releaseDt && <span className="bo-erreur">{editErreurs.releaseDt}</span>}
+                                </div>
+                                <div className="bo-form-group">
+                                    <label htmlFor="edit-duration">Durée (jours)</label>
+                                    <input id="edit-duration" name="duration" type="number"
+                                        min="1" value={editForm.duration} onChange={changerEdit} />
+                                </div>
+                            </div>
+
+                            <div className="bo-form-actions">
+                                <button type="button" className="bo-btn-secondary"
+                                        onClick={() => setEditEv(null)} disabled={editSaving}>
+                                    Annuler
+                                </button>
+                                <button type="button" className="bo-btn-secondary"
+                                        onClick={() => modifier(true)} disabled={editSaving}
+                                        style={{ color: "#92400e", borderColor: "#fcd34d" }}>
+                                    {editSaving ? "…" : "Brouillon"}
+                                </button>
+                                <button type="button" className="bo-btn-primary"
+                                        onClick={() => modifier(false)} disabled={editSaving}>
+                                    {editSaving ? "Enregistrement…" : "Enregistrer"}
                                 </button>
                             </div>
                         </form>
@@ -914,6 +1025,7 @@ function TabCagnottes({ session }) {
 // ── Page principale ───────────────────────────────────────────
 export default function BackofficeAssociation() {
     const navigate = useNavigate();
+    const { token } = useParams();
     const [session,    setSession]    = useState(null);
     const [onglet,     setOnglet]     = useState("dashboard");
     const [stats,      setStats]      = useState({ evenements: null, adherents: null, paiements: null, cagnottes: null });
@@ -921,8 +1033,16 @@ export default function BackofficeAssociation() {
 
     useEffect(() => {
         const raw = sessionStorage.getItem("assoc_session");
-        if (raw) setSession(JSON.parse(raw));
-    }, []);
+        if (!raw) return;
+        const sess = JSON.parse(raw);
+        const tokenId = decodeAssocId(token ?? "");
+        if (tokenId === null || tokenId !== sess.id) {
+            sessionStorage.removeItem("assoc_session");
+            navigate("/associations/login");
+            return;
+        }
+        setSession(sess);
+    }, [token, navigate]);
 
     useEffect(() => {
         if (!session || session.statut !== "VALIDATED") return;

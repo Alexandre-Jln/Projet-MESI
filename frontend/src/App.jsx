@@ -33,7 +33,7 @@ export default function App() {
                 <Route path="/associations/register" element={<RegisterAssociation />} />
                 <Route path="/associations/login"    element={<LoginAssociation />} />
                 <Route path="/admin/associations"         element={<AdminAssociations />} />
-                <Route path="/associations/backoffice"   element={<BackofficeAssociation />} />
+                <Route path="/associations/backoffice/:token" element={<BackofficeAssociation />} />
 
                 <Route path="*" element={<NotFound />} />
             </Routes>
