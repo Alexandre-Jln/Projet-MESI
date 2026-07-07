@@ -1,5 +1,7 @@
 import styles from "../../css/EventCard.module.css";
 
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+
 const CATEGORY_GRADIENTS = {
     Sport:         "linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%)",
     Culture:       "linear-gradient(135deg, #2d1b4e 0%, #6b3fa0 100%)",
@@ -19,9 +21,10 @@ function formatDate(isoDate) {
 }
 
 export default function EventCard({ event }) {
-    const { name, releaseDt, duration, synopsis, associationName, associationCategorie, lieu } = event;
-    const gradient = CATEGORY_GRADIENTS[associationCategorie] ?? "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)";
-    const initials = name.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
+    const { name, releaseDt, duration, synopsis, associationName, associationCategorie, lieu, photoIds } = event;
+    const gradient    = CATEGORY_GRADIENTS[associationCategorie] ?? "linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)";
+    const initials    = name.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
+    const firstPhoto  = photoIds?.[0] ? `${API_URL}/evenements/photos/${photoIds[0]}` : null;
 
     const city = lieu
         ? lieu.split(",").at(-1).replace(/^\d{5}\s*/, "").trim()
@@ -29,8 +32,11 @@ export default function EventCard({ event }) {
 
     return (
         <div className={styles.card}>
-            <div className={styles.banner} style={{ background: gradient }}>
-                <span className={styles.initials}>{initials}</span>
+            <div className={styles.banner} style={firstPhoto ? {} : { background: gradient }}>
+                {firstPhoto
+                    ? <img src={firstPhoto} alt={name} className={styles.bannerImg} />
+                    : <span className={styles.initials}>{initials}</span>
+                }
                 {associationCategorie && (
                     <span className={styles.categoryBadge}>{associationCategorie}</span>
                 )}

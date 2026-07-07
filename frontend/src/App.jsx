@@ -10,7 +10,8 @@ import CreateCagnotte      from "./pages/CreateCagnotte";
 import CagnotteDetail      from "./pages/CagnotteDetail";
 import RegisterAssociation from "./pages/RegisterAssociation";
 import LoginAssociation    from "./pages/LoginAssociation";
-import AdminAssociations   from "./pages/AdminAssociations";
+import AdminAssociations      from "./pages/AdminAssociations";
+import BackofficeAssociation from "./pages/BackofficeAssociation";
 
 export default function App() {
     return (
@@ -31,7 +32,8 @@ export default function App() {
                 <Route path="/cagnottes/:id"     element={<CagnotteDetail />} />
                 <Route path="/associations/register" element={<RegisterAssociation />} />
                 <Route path="/associations/login"    element={<LoginAssociation />} />
-                <Route path="/admin/associations"    element={<AdminAssociations />} />
+                <Route path="/admin/associations"         element={<AdminAssociations />} />
+                <Route path="/associations/backoffice/:token" element={<BackofficeAssociation />} />
 
                 <Route path="*" element={<NotFound />} />
             </Routes>

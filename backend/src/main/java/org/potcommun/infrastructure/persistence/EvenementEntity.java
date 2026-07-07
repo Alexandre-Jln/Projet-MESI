@@ -33,6 +33,9 @@ public class EvenementEntity {
     @Column(precision = 9, scale = 6)
     private BigDecimal longitude;
 
+    @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
+    private boolean brouillon = false;
+
     public Integer getId()            { return id; }
     public String getName()           { return name; }
     public Integer getDuration()      { return duration; }
@@ -41,4 +44,14 @@ public class EvenementEntity {
     public Integer getAssociationId() { return associationId; }
     public BigDecimal getLatitude()   { return latitude; }
     public BigDecimal getLongitude()  { return longitude; }
+    public boolean isBrouillon()      { return brouillon; }
+
+    public void setName(String name)              { this.name = name; }
+    public void setDuration(Integer duration)     { this.duration = duration; }
+    public void setReleaseDt(LocalDate releaseDt) { this.releaseDt = releaseDt; }
+    public void setSynopsis(String synopsis)      { this.synopsis = synopsis; }
+    public void setAssociationId(Integer id)      { this.associationId = id; }
+    public void setLatitude(BigDecimal lat)       { this.latitude = lat; }
+    public void setLongitude(BigDecimal lng)      { this.longitude = lng; }
+    public void setBrouillon(boolean b)           { this.brouillon = b; }
 }

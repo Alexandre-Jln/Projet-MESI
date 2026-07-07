@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+
 /**
  * @typedef {Object} EventSummary
  * @property {number}  id
@@ -49,39 +51,73 @@ const MOCK_EVENTS = [
     { id: 22, name: "Conférence prévention des cancers", releaseDt: "2026-11-18", duration: 1,  associationId: 6, associationName: "Ligue contre le Cancer",    associationCategorie: "Santé",            lieu: "14 rue Corvisart, 75013 Paris",         synopsis: "Conférence médicale grand public sur le dépistage précoce, les facteurs de risque et les avancées thérapeutiques.", latitude: 48.8278, longitude: 2.3511 },
 ];
 
+function applyFiltersAndPaginate(events, { page, size, city, dateFrom, dateTo }) {
+    let filtered = events;
+    if (dateFrom) filtered = filtered.filter(e => e.releaseDt >= dateFrom);
+    if (dateTo)   filtered = filtered.filter(e => e.releaseDt <= dateTo);
+    if (city)     filtered = filtered.filter(e =>
+        (e.lieu ?? e.associationName ?? "").toLowerCase().includes(city.toLowerCase())
+    );
+    const totalElements = filtered.length;
+    const totalPages    = Math.max(1, Math.ceil(totalElements / size));
+    const safePage      = Math.min(page, totalPages - 1);
+    const content       = filtered.slice(safePage * size, safePage * size + size);
+    return { content, totalPages, totalElements, number: safePage, size };
+}
+
 export function useEvents({ page = 0, size = 20, city = "", dateFrom = "", dateTo = "" } = {}) {
-    const [data, setData]       = useState(null);
+    const [data,    setData]    = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error,   setError]   = useState(null);
 
     useEffect(() => {
         setLoading(true);
-        const timer = setTimeout(() => {
-            let filtered = MOCK_EVENTS;
+        setError(null);
 
-            if (dateFrom) filtered = filtered.filter(e => e.releaseDt >= dateFrom);
-            if (dateTo)   filtered = filtered.filter(e => e.releaseDt <= dateTo);
-            if (city)     filtered = filtered.filter(e =>
-                e.lieu.toLowerCase().includes(city.toLowerCase())
-            );
+        const params = new URLSearchParams();
+        if (dateFrom) params.set("dateFrom", dateFrom);
+        if (dateTo)   params.set("dateTo",   dateTo);
 
-            const totalElements = filtered.length;
-            const totalPages    = Math.max(1, Math.ceil(totalElements / size));
-            const safePage      = Math.min(page, totalPages - 1);
-            const content       = filtered.slice(safePage * size, safePage * size + size);
-
-            setData({ content, totalPages, totalElements, number: safePage, size });
-            setLoading(false);
-        }, 300);
-        return () => clearTimeout(timer);
+        fetch(`${API_URL}/evenements/read?${params.toString()}`)
+            .then(r => {
+                if (!r.ok) throw new Error("Erreur serveur");
+                return r.json();
+            })
+            .then(events => {
+                setData(applyFiltersAndPaginate(events, { page, size, city, dateFrom, dateTo }));
+                setLoading(false);
+            })
+            .catch(() => {
+                // Fallback sur les données de mock si le backend est inaccessible
+                setData(applyFiltersAndPaginate(MOCK_EVENTS, { page, size, city, dateFrom, dateTo }));
+                setError(null);
+                setLoading(false);
+            });
     }, [page, size, city, dateFrom, dateTo]);
 
-    return { data, loading, error: null };
+    return { data, loading, error };
 }
 
 export function fetchEventFilterOptions() {
-    const cities = [...new Set(MOCK_EVENTS.map(e => {
-        const parts = e.lieu.split(",");
-        return parts[parts.length - 1].replace(/^\d{5}\s*/, "").trim();
-    }))].sort();
-    return Promise.resolve({ cities });
+    return fetch(`${API_URL}/evenements/read`)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(events => {
+            const cities = [...new Set(events
+                .map(e => e.lieu)
+                .filter(Boolean)
+                .map(lieu => {
+                    const parts = lieu.split(",");
+                    return parts[parts.length - 1].replace(/^\d{5}\s*/, "").trim();
+                })
+            )].sort();
+            return { cities };
+        })
+        .catch(() => {
+            // Fallback mock cities
+            const cities = [...new Set(MOCK_EVENTS.map(e => {
+                const parts = e.lieu.split(",");
+                return parts[parts.length - 1].replace(/^\d{5}\s*/, "").trim();
+            }))].sort();
+            return { cities };
+        });
 }
