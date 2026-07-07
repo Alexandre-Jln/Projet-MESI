@@ -8,6 +8,7 @@ export default function Register() {
     const [email,         setEmail]         = useState("");
     const [password,      setPassword]      = useState("");
     const [error,         setError]         = useState(null);
+    const [success,       setSuccess]       = useState(false);
     const [loading,       setLoading]       = useState(false);
     const [captchaToken,  setCaptchaToken]  = useState(null);
     const captchaRef = useRef(null);
@@ -31,10 +32,10 @@ export default function Register() {
             });
 
             if (res.ok) {
-                // TODO : rediriger vers /login ou connecter directement
+                setSuccess(true);
             } else {
                 const data = await res.json().catch(() => ({}));
-                setError(data.message ?? "Erreur lors de l'inscription.");
+                setError(data.message ?? data.error ?? "Erreur lors de l'inscription.");
                 captchaRef.current?.resetCaptcha();
                 setCaptchaToken(null);
             }
@@ -46,6 +47,20 @@ export default function Register() {
             setLoading(false);
         }
     };
+
+    if (success) {
+        return (
+            <main className="auth-page">
+                <div className="auth-card">
+                    <h2 className="auth-card__title">Vérifiez votre boîte mail</h2>
+                    <p>
+                        Un email de confirmation a été envoyé à <strong>{email}</strong>.
+                        Cliquez sur le lien reçu pour activer votre compte.
+                    </p>
+                </div>
+            </main>
+        );
+    }
 
     return (
         <main className="auth-page">

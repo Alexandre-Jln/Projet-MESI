@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { useAuth } from "../context/AuthContext";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
@@ -11,6 +13,8 @@ export default function Login() {
     const [loading,       setLoading]       = useState(false);
     const [captchaToken,  setCaptchaToken]  = useState(null);
     const captchaRef = useRef(null);
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault();
@@ -31,10 +35,12 @@ export default function Login() {
             });
 
             if (res.ok) {
-                // TODO : stocker le token / rediriger
+                const data = await res.json();
+                login(data);
+                navigate("/");
             } else {
                 const data = await res.json().catch(() => ({}));
-                setError(data.message ?? "Identifiants invalides.");
+                setError(data.message ?? data.error ?? "Identifiants invalides.");
                 captchaRef.current?.resetCaptcha();
                 setCaptchaToken(null);
             }

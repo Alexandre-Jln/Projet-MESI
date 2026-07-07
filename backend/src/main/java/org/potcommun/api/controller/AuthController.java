@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.potcommun.api.dto.LoginRequest;
 import org.potcommun.api.dto.RegisterRequest;
 import org.potcommun.api.dto.UserResponse;
+import org.potcommun.domain.service.EmailVerificationService;
 import org.potcommun.domain.service.HCaptchaService;
 import org.potcommun.domain.service.UserService;
 import org.potcommun.infrastructure.mapper.UserMapper;
@@ -20,11 +21,16 @@ public class AuthController {
     private final UserService     service;
     private final UserMapper      mapper;
     private final HCaptchaService hCaptchaService;
+    private final EmailVerificationService emailVerificationService;
 
-    public AuthController(UserService service, UserMapper mapper, HCaptchaService hCaptchaService) {
+    public AuthController(UserService service,
+                          UserMapper mapper,
+                          HCaptchaService hCaptchaService,
+                          EmailVerificationService emailVerificationService) {
         this.service         = service;
         this.mapper          = mapper;
         this.hCaptchaService = hCaptchaService;
+        this.emailVerificationService = emailVerificationService;
     }
 
     @PostMapping("/register")
@@ -49,5 +55,11 @@ public class AuthController {
         return ResponseEntity.ok(mapper.toResponse(
                 service.login(request.email(), request.password())
         ));
+    }
+
+    @GetMapping("/verify-email")
+    public ResponseEntity<?> verifyEmail(@RequestParam String token) {
+        emailVerificationService.verifyToken(token);
+        return ResponseEntity.ok(Map.of("message", "Email vérifié avec succès."));
     }
 }
