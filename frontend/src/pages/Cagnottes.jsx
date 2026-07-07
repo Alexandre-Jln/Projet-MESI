@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+import Layout from "../components/Layout";
 import "../css/Cagnotte.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8082";
@@ -21,9 +21,8 @@ export default function Cagnottes() {
         c.objectif ? Math.min(100, Math.round((c.montantCollecte / c.objectif) * 100)) : null;
 
     return (
-        <>
-            <Header />
-            <main className="cagnottes-page">
+        <Layout>
+            <div className="cagnottes-page">
                 <div className="cagnottes-header">
                     <h1>Cagnottes</h1>
                     <Link to="/cagnottes/creer" className="btn-creer">+ Créer une cagnotte</Link>
@@ -61,7 +60,7 @@ export default function Cagnottes() {
                         </Link>
                     ))}
                 </div>
-            </main>
-        </>
+            </div>
+        </Layout>
     );
 }
