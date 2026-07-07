@@ -155,7 +155,7 @@ export default function CagnotteDetail() {
                                                     <button
                                                         key={v}
                                                         type="button"
-                                                        className={`btn-montant ${montant == v ? "actif" : ""}`}
+                                                        className={`btn-montant ${montant === v ? "actif" : ""}`}
                                                         onClick={() => setMontant(String(v))}
                                                     >{v} €</button>
                                                 ))}
