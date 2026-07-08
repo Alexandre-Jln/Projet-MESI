@@ -10,6 +10,8 @@ public record LoginRequest(
         String email,
 
         @NotBlank(message = "Le mot de passe est obligatoire")
-        String password
+        String password,
+
+        String captchaToken
 
 ) {}

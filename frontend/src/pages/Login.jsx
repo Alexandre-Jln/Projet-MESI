@@ -1,35 +1,56 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
+import { setUserSession } from "../utils/session";
 import "../css/Auth.css";
 
 const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY
+    ?? "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 
 export default function Login() {
-    const [email,    setEmail]    = useState("");
+    const navigate = useNavigate();
+    const captchaRef = useRef(null);
+
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error,    setError]    = useState(null);
-    const [loading,  setLoading]  = useState(false);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [captchaToken, setCaptchaToken] = useState(null);
 
     const submit = async (e) => {
         e.preventDefault();
         setError(null);
+
+        if (!captchaToken) {
+            setError("Veuillez compléter le captcha.");
+            return;
+        }
+
         setLoading(true);
 
         try {
             const res = await fetch(`${API_URL}/auth/login`, {
-                method:  "POST",
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body:    JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, password, captchaToken }),
             });
 
+            const data = await res.json().catch(() => ({}));
+
             if (res.ok) {
-                // TODO : stocker le token / rediriger
+                // data = { id, email } renvoyé par UserMapper côté backend
+                setUserSession(data);
+                navigate("/");
             } else {
-                const data = await res.json().catch(() => ({}));
-                setError(data.message ?? "Identifiants invalides.");
+                setError(data.error ?? data.message ?? "Identifiants invalides.");
+                captchaRef.current?.reset();
+                setCaptchaToken(null);
             }
         } catch {
             setError("Impossible de joindre le serveur. Vérifiez votre connexion.");
+            captchaRef.current?.reset();
+            setCaptchaToken(null);
         } finally {
             setLoading(false);
         }
@@ -75,7 +96,14 @@ export default function Login() {
                         />
                     </div>
 
-                    <button className="auth-btn" type="submit" disabled={loading}>
+                    <ReCAPTCHA
+                        sitekey={RECAPTCHA_SITE_KEY}
+                        onChange={(token) => setCaptchaToken(token)}
+                        onExpired={() => setCaptchaToken(null)}
+                        ref={captchaRef}
+                    />
+
+                    <button className="auth-btn" type="submit" disabled={loading || !captchaToken}>
                         {loading ? "Connexion…" : "Se connecter"}
                     </button>
 
@@ -84,7 +112,13 @@ export default function Login() {
                     </a>
                 </form>
 
-                {/* Séparateur + lien espace association */}
+                <div className="auth-switch">
+                    <span>Vous n'avez pas de compte ?</span>
+                    <Link to="/register" className="auth-switch__link">
+                        Inscrivez-vous →
+                    </Link>
+                </div>
+
                 <div className="auth-switch">
                     <span>Vous représentez une association ?</span>
                     <Link to="/associations/login" className="auth-switch__link">

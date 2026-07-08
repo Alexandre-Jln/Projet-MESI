@@ -4,6 +4,7 @@ import AssociationsPage from "./pages/public/AssociationsPage";
 import EventsPage       from "./pages/public/EventsPage";
 import Login               from "./pages/Login";
 import Register            from "./pages/Register";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 import NotFound            from "./pages/NotFound";
 import Cagnottes           from "./pages/Cagnottes";
 import CreateCagnotte      from "./pages/CreateCagnotte";
@@ -11,6 +12,7 @@ import CagnotteDetail      from "./pages/CagnotteDetail";
 import RegisterAssociation from "./pages/RegisterAssociation";
 import LoginAssociation    from "./pages/LoginAssociation";
 import AdminAssociations   from "./pages/AdminAssociations";
+import EspaceParticulier   from "./pages/EspaceParticulier";
 
 export default function App() {
     return (
@@ -25,6 +27,7 @@ export default function App() {
                 <Route path="/benevolat"    element={<NotFound />} />
                 <Route path="/login"        element={<Login />} />
                 <Route path="/register"     element={<Register />} />
+                <Route path="/verify-email" element={<EmailVerificationPage />} />
                 <Route path="/evenements"        element={<EventsPage />} />
                 <Route path="/cagnottes"         element={<Cagnottes />} />
                 <Route path="/cagnottes/creer"   element={<CreateCagnotte />} />
@@ -32,6 +35,7 @@ export default function App() {
                 <Route path="/associations/register" element={<RegisterAssociation />} />
                 <Route path="/associations/login"    element={<LoginAssociation />} />
                 <Route path="/admin/associations"    element={<AdminAssociations />} />
+                <Route path="/profil"                element={<EspaceParticulier />} />
 
                 <Route path="*" element={<NotFound />} />
             </Routes>

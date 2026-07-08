@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.NoSuchElementException;
 
 /**
  * Service métier utilisateur.
@@ -24,10 +25,13 @@ public class UserService {
 
     private final UserRepository  repo;
     private final PasswordEncoder encoder;
+    private final EmailVerificationService emailVerificationService;
 
-    public UserService(UserRepository repo, PasswordEncoder encoder) {
+    public UserService(UserRepository repo, PasswordEncoder encoder,
+                       EmailVerificationService emailVerificationService) {
         this.repo    = repo;
         this.encoder = encoder;
+        this.emailVerificationService = emailVerificationService;
     }
 
     /**
@@ -46,7 +50,15 @@ public class UserService {
         user.setEmailHash(hash);                     // SHA-256 pour les lookups
         user.setPassword(encoder.encode(password));  // BCrypt
 
-        return repo.save(user);
+        UserEntity saved = repo.save(user);
+
+        try {
+            emailVerificationService.sendVerificationEmail(saved, email);
+        } catch (Exception e) {
+            // SMTP non configuré (démo) : on n'empêche pas l'inscription.
+        }
+
+        return saved;
     }
 
     /**
@@ -64,6 +76,30 @@ public class UserService {
         }
 
         return user;
+    }
+
+    /**
+     * Met à jour l'email et/ou le mot de passe d'un utilisateur (onglet Paramètres).
+     * Le mot de passe n'est changé que si non-vide.
+     */
+    public UserEntity updateProfile(Long id, String email, String password) {
+        UserEntity user = repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Utilisateur introuvable."));
+
+        String hash = hashEmail(email);
+        if (!hash.equals(user.getEmailHash())) {
+            if (repo.findByEmailHash(hash).isPresent()) {
+                throw new UserAlreadyExistsException(email);
+            }
+            user.setEmail(email);
+            user.setEmailHash(hash);
+        }
+
+        if (password != null && !password.isBlank()) {
+            user.setPassword(encoder.encode(password));
+        }
+
+        return repo.save(user);
     }
 
     private String hashEmail(String email) {

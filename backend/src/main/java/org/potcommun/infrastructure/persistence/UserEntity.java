@@ -39,6 +39,10 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
+    /** Indique si l'utilisateur a confirmé son adresse email. */
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
+
     // --- Getters / Setters ---
 
     public Long getId() { return id; }
@@ -51,4 +55,7 @@ public class UserEntity {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public boolean isEmailVerified() { return emailVerified; }
+    public void setEmailVerified(boolean emailVerified) { this.emailVerified = emailVerified; }
 }
